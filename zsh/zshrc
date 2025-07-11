@@ -1,0 +1,309 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="muse"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the fand other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+	git
+	zsh-syntax-highlighting
+	zsh-autosuggestions
+	npm
+)
+
+export PATH=$PATH:/opt/homebrew/bin
+
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/Cellar/pango/1.50.14/lib/pkgconfig
+
+source $ZSH/oh-my-zsh.sh
+
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# NPM and node
+alias npmg="pnpm i -g "
+alias npmgu="pnpm uninstall -g"
+alias npmun="pnpm uninstall"
+alias npms="pnpm i -S "
+alias npmd="pnpm i -D "
+alias npme='PATH="$(npm bin)":"$PATH"'
+alias npmo="pnpm outdated"
+alias npmv="pnpm -v"
+alias npml="pnpm list"
+alias npml0="pnpm ls --depth=0"
+alias npmst="pnpm start"
+alias npmt="pnpm test"
+alias npmr="pnpm run"
+alias npmp="pnpm publish"
+alias npmi="pnpm init -y"
+
+alias pip="pip3"
+
+# Git
+alias gitcl="git clone"
+alias gitcl1="git clone --depth=1"
+alias gitclr="git clone --recurse-submodules"
+
+# alias zellijconf="nvim ~/.config/zellij/config.kdl"
+function confzellij() {
+	curr=$PWD
+	cd ~/.config/zellij
+	nvim config.kdl
+	cd $curr
+}
+
+# alias confnvim="nvim ~/.config/nvim"
+function confnvim() {
+	curr=$PWD
+	cd ~/.config/nvim
+	nvim .
+	cd $curr
+}
+
+alias rm_nvim_swp="rm ~/.local/state/nvim/swap/*.swp"
+
+function confzsh() {
+ curr=$PWD
+ nvim ~/.zshrc
+ source ~/.zshrc
+ cd $curr
+}
+
+function obs() {
+    curr=$PWD
+    cd ~/Documents/obsidian/obsidian-personal
+    nvim .
+    cd $curr
+}
+
+alias ytdl=youtube-dl
+
+alias cls=clear
+
+# random
+alias lsl='ls -alh --color=always'
+alias cls=clear
+mdcd() {
+    mkdir $1 && cd $1
+}
+alias md="mkdir"
+alias rmrf="rm -irf"
+
+alias lg="lazygit"
+alias ktn=kotlinc-native
+
+# --- shortcuts ----
+alias foriumcd="cd ~/projects/forium/forium"
+alias lbcd="cd ~/projects/littlebird/Little-Bird-Client"
+alias lbbcd="cd ~/projects/littlebird/Little-Bird-Backend"
+function wokayvim() {
+    curr=$PWD
+    cd ~/projects/wokay/wokay
+    nvim
+    cd $curr
+}
+
+alias tszig="cd ~/projects/oss/ts-parser-zig"
+function tszigvim() {
+    curr=$PWD
+    cd ~/projects/oss/ts-parser-zig
+    nvim
+    cd $curr
+}
+
+BLOG_FOLDER=~/projects/avyakta_life
+alias blogcd="cd $BLOG_FOLDER"
+function blogvim() {
+    curr=$PWD
+    cd $BLOG_FOLDER
+    nvim
+    cd $curr
+}
+
+alias confghostty="nvim ~/Library/Application\ Support/com.mitchellh.ghostty/config" 
+
+
+function copyFile() {
+	pbcopy < $1
+	echo "File $1 copied to clipboard!"
+}
+
+function archive() {
+	tar cf $1.tar.xz $1
+}
+
+# ------ Go -------
+export GOROOT=$(brew --prefix golang)/libexec 
+export GOPATH=$HOME/.go
+export GOBIN=$GOPATH/bin
+export GOROOTBIN=$GOROOT/bin
+
+export CARGOPATH=$HOME/.cargo/bin
+export GHCPATH=$HOME/.ghcup/bin
+export LOCAL=$HOME/.local/bin
+
+# ----- Tere -----
+function tere() {
+    local result=$(command tere "$@")
+    [ -n "$result" ] && cd -- "$result"
+}
+
+
+# ---- Vlang -----
+export V_PATH=$HOME/programs/v
+
+export DENO_PATH=$HOME/.deno/bin
+
+alias rangercd='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+
+
+[ -e ~/.profile ] && . ~/.profile
+
+# pnpm
+export PNPM_HOME="/Users/himujjalupadhyaya/Library/pnpm"
+# pnpm end
+
+# bun completions
+[ -s "/Users/himujjalupadhyaya/.bun/_bun" ] && source "/Users/himujjalupadhyaya/.bun/_bun"
+
+# bun
+BUN_INSTALL="$HOME/.bun"
+export BUNBIN=$BUN_INSTALL/bin
+
+
+# --------========== PATH ===============
+PATH=$FLUTTER_PATH:$GOBIN:$GOROOTBIN:$CARGOPATH:$LOCAL:$PNPM_HOME:$BUNBIN:$DENO_PATH:$V_PATH:$PATH
+export PATH=$GOPATH/bin:$PATH
+
+# ------ grammarly node hack: https://github.com/znck/grammarly/issues/334 ------
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Prints the size of the directory currently in or the one passed as argument
+function dsize(){
+    dir=$(pwd)
+    if [ -n "$1" ]; then
+            dir=$1
+    fi
+    du -hs "$dir"
+}
+export PATH="/Users/himujjalupadhyaya/.moon/bin:$PATH"
+
+function atty() {
+    alacritty -e sh -c "zellij" $1
+}
+
+# ------ zvm ------
+function init_zvm() {
+    export ZVM_INSTALL=$HOME/.zvm
+}
+
+# Wasmer
+export WASMER_DIR="/Users/himujjalupadhyaya/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+. "$HOME/.cargo/env"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# always ask confirmation for `rm`
+alias rm='rm -i'
+
+function confirm() {
+    echo -n "Do you absolutely want to run $*? Remember why you put this in the first place...... [N/y] "
+    read REPLY
+    echo
+    if test "$REPLY" = "y" -o "$REPLY" = "Y" -o "$REPLY" = "yes" -o "$REPLY" = "Yes" -o "$REPLY" = "YES"; then
+        "$@"
+    else
+        echo "Cancelled by user"
+    fi
+}
+autoload bashcompinit
+
+# ---- activate mise -----
+MISE=$(which mise)
+eval "$($MISE activate zsh)"

@@ -8,9 +8,6 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "git_panel": {
-    "dock": "right"
-  },
   "icon_theme": "Material Icon Theme",
   "features": {
     "edit_prediction_provider": "zed"
@@ -25,8 +22,6 @@
     "git_status": true,
     "modal_max_width": "large"
   },
-  // NOTE: Change the font family to your preference
-  "buffer_font_family": "FiraCode Nerd",
   // Vim mode settings
   "vim_mode": true,
   "vim": {
@@ -123,12 +118,14 @@
   },
   // Move all panel to the right
   "project_panel": {
+    "hide_gitignore": true,
     "button": true,
-    "dock": "right",
-    "git_status": true
+    "git_status": true,
+    "show_diagnostics": "all"
   },
   "outline_panel": {
-    "dock": "right"
+    "dock": "right",
+    "file_icons": true
   },
   "collaboration_panel": {
     "dock": "left"

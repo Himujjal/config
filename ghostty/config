@@ -1,0 +1,7 @@
+theme = rose-pine
+
+# keybinds
+keybind = cmd+left=new_split:left
+keybind = cmd+down=new_split:down
+keybind = cmd+up=new_split:up
+keybind = cmd+right=new_split:right
