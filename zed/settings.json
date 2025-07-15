@@ -13,7 +13,7 @@
     "edit_prediction_provider": "zed"
   },
   "base_keymap": "VSCode",
-  "theme": "Rosé Pine Moon",
+  "theme": "Rosé Pine",
   "ui_font_size": 14,
   "buffer_font_size": 12,
   // Finder model width
@@ -136,5 +136,23 @@
   },
   "chat_panel": {
     "dock": "left"
+  },
+  "experimental.theme_overrides": {
+    "background.appearance": "blurred",
+    "background": "#191724EE",
+    "editor.background": "#00000000",
+    "panel.background": "#00000000",
+    "tab_bar.background": "#00000000",
+    "terminal.background": "#00000000",
+    "toolbar.background": "#00000000",
+    "tab.inactive_background": "#00000000",
+    "tab.active_background": "#19172420",
+    "status_bar.background": "#191724BB",
+    "title_bar.background": "#191724BB",
+    "elevated_surface.background": "#1f1d2eBB",
+    "surface.background": "#90",
+    "editor.gutter.background": "#19172410",
+    "editor.indent_guide_active": "#6e6a8680",
+    "editor.active_line.background": "#1f1d2e20"
   }
 }

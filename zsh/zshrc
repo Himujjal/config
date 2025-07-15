@@ -126,14 +126,6 @@ alias gitcl="git clone"
 alias gitcl1="git clone --depth=1"
 alias gitclr="git clone --recurse-submodules"
 
-# alias zellijconf="nvim ~/.config/zellij/config.kdl"
-function confzellij() {
-	curr=$PWD
-	cd ~/.config/zellij
-	nvim config.kdl
-	cd $curr
-}
-
 # alias confnvim="nvim ~/.config/nvim"
 function confnvim() {
 	curr=$PWD
@@ -142,18 +134,31 @@ function confnvim() {
 	cd $curr
 }
 
-alias rm_nvim_swp="rm ~/.local/state/nvim/swap/*.swp"
+function conf() {
+    curr=$PWD
+    cd ~/.config
+    nvim .
+    cd $curr
+}
 
 function confzsh() {
  curr=$PWD
- nvim ~/.zshrc
+ cd ~/.config/zsh
+ nvim zshrc
  source ~/.zshrc
  cd $curr
 }
 
+function conftty() {
+    curr=$PWD
+    cd ~/.config/ghostty
+    nvim config
+    cd $curr
+}
+
 function obs() {
     curr=$PWD
-    cd ~/Documents/obsidian/obsidian-personal
+    cd ~/Documents/obsidian-personal
     nvim .
     cd $curr
 }
@@ -175,34 +180,10 @@ alias lg="lazygit"
 alias ktn=kotlinc-native
 
 # --- shortcuts ----
-alias foriumcd="cd ~/projects/forium/forium"
 alias lbcd="cd ~/projects/littlebird/Little-Bird-Client"
 alias lbbcd="cd ~/projects/littlebird/Little-Bird-Backend"
-function wokayvim() {
-    curr=$PWD
-    cd ~/projects/wokay/wokay
-    nvim
-    cd $curr
-}
 
 alias tszig="cd ~/projects/oss/ts-parser-zig"
-function tszigvim() {
-    curr=$PWD
-    cd ~/projects/oss/ts-parser-zig
-    nvim
-    cd $curr
-}
-
-BLOG_FOLDER=~/projects/avyakta_life
-alias blogcd="cd $BLOG_FOLDER"
-function blogvim() {
-    curr=$PWD
-    cd $BLOG_FOLDER
-    nvim
-    cd $curr
-}
-
-alias confghostty="nvim ~/Library/Application\ Support/com.mitchellh.ghostty/config" 
 
 
 function copyFile() {
