@@ -8,15 +8,12 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "git_panel": {
-    "dock": "right"
-  },
   "icon_theme": "Material Icon Theme",
   "features": {
     "edit_prediction_provider": "zed"
   },
   "base_keymap": "VSCode",
-  "theme": "Rosé Pine Moon",
+  "theme": "Rosé Pine",
   "ui_font_size": 14,
   "buffer_font_size": 12,
   // Finder model width
@@ -25,8 +22,6 @@
     "git_status": true,
     "modal_max_width": "large"
   },
-  // NOTE: Change the font family to your preference
-  "buffer_font_family": "FiraCode Nerd",
   // Vim mode settings
   "vim_mode": true,
   "vim": {
@@ -57,24 +52,32 @@
   },
   // Use Copilot Chat AI as default
   "agent": {
+    "default_profile": "minimal",
     "default_model": {
       "provider": "copilot_chat",
       "model": "claude-3-7-sonnet"
-    },
-    "version": "2"
+    }
   },
   // Uncomment below to use local AI with Ollama, refer https://zed.dev/docs/language-model-integration?highlight=ollama#using-ollama-on-macos
-  // "assistant": {
-  //   "default_model": {
-  //     "provider": "ollama",
-  //     "model": "llama3.1:latest"
-  //   },
-  //   "version": "2",
-  //   "provider": null
-  // },
+  "assistant": {
+    "default_model": {
+      "provider": "openai",
+      "model": "qwen/qwen3-32b"
+    }
+  },
   "language_models": {
     "ollama": {
       "api_url": "http://localhost:11434"
+    },
+    "openai": {
+      "api_url": "https://api.groq.com/openai/v1",
+      "available_models": [
+        {
+          "name": "qwen/qwen3-32b",
+          "display_name": "Groq Qwen3-32B",
+          "max_tokens": 131072
+        }
+      ]
     }
   },
   // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
@@ -108,7 +111,6 @@
   },
   // Use zed commit editor
   "terminal": {
-    "font_family": "Maple Mono NF",
     "env": {
       "EDITOR": "zed --wait"
     }
@@ -125,12 +127,14 @@
   },
   // Move all panel to the right
   "project_panel": {
+    "hide_gitignore": true,
     "button": true,
-    "dock": "right",
-    "git_status": true
+    "git_status": true,
+    "show_diagnostics": "all"
   },
   "outline_panel": {
-    "dock": "right"
+    "dock": "right",
+    "file_icons": true
   },
   "collaboration_panel": {
     "dock": "left"
@@ -141,5 +145,23 @@
   },
   "chat_panel": {
     "dock": "left"
+  },
+  "experimental.theme_overrides": {
+    "background.appearance": "blurred",
+    "background": "#191724DD",
+    "editor.background": "#00000000",
+    "panel.background": "#00000000",
+    "tab_bar.background": "#00000000",
+    "terminal.background": "#00000000",
+    "toolbar.background": "#00000000",
+    "tab.inactive_background": "#00000000",
+    "tab.active_background": "#19172420",
+    "status_bar.background": "#191724BB",
+    "title_bar.background": "#191724BB",
+    "elevated_surface.background": "#1f1d2eDD",
+    "surface.background": "#90",
+    "editor.gutter.background": "#19172410",
+    "editor.indent_guide_active": "#6e6a8680",
+    "editor.active_line.background": "#1f1d2e20"
   }
 }

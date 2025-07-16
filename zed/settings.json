@@ -15,7 +15,8 @@
   "base_keymap": "VSCode",
   "theme": "Rosé Pine",
   "ui_font_size": 14,
-  "buffer_font_size": 12,
+  "buffer_font_size": 13,
+  "agent_font_size": 14,
   // Finder model width
   "file_finder": {
     "file_icons": true,
@@ -51,24 +52,33 @@
     "right_padding": 0.15
   },
   // Use Copilot Chat AI as default
-  "agent": {
+  /* Duplicated key auto-commented: "agent": {
+    "default_profile": "minimal",
     "default_model": {
       "provider": "copilot_chat",
       "model": "claude-3-7-sonnet"
     }
-  },
+  }, */
   // Uncomment below to use local AI with Ollama, refer https://zed.dev/docs/language-model-integration?highlight=ollama#using-ollama-on-macos
-  // "assistant": {
-  //   "default_model": {
-  //     "provider": "ollama",
-  //     "model": "llama3.1:latest"
-  //   },
-  //   "version": "2",
-  //   "provider": null
-  // },
+  "agent": {
+    "default_model": {
+      "provider": "openai",
+      "model": "qwen/qwen3-32b"
+    }
+  },
   "language_models": {
     "ollama": {
       "api_url": "http://localhost:11434"
+    },
+    "openai": {
+      "api_url": "https://api.groq.com/openai/v1",
+      "available_models": [
+        {
+          "name": "qwen/qwen3-32b",
+          "display_name": "Groq Qwen3-32B",
+          "max_tokens": 131072
+        }
+      ]
     }
   },
   // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
@@ -80,6 +90,17 @@
     "tailwindcss-language-server": {
       "settings": {
         "classAttributes": ["class", "className", "ngClass", "styles"]
+      }
+    },
+    "pyright": {
+      "settings": {
+        "python.analysis": {
+          "diagnosticMode": "workspace",
+          "typeCheckingMode": "strict"
+        },
+        "python": {
+          "pythonPath": ".venv/bin/python"
+        }
       }
     }
   },
@@ -95,9 +116,7 @@
       }
     },
     "Python": {
-      "format_on_save": { "language_server": { "name": "ruff" } },
-      "formatter": { "language_server": { "name": "ruff" } },
-      "language_servers": ["pyright", "ruff"]
+      "formatter": { "language_server": { "name": "ruff" } }
     }
   },
   // Use zed commit editor
@@ -118,7 +137,7 @@
   },
   // Move all panel to the right
   "project_panel": {
-    "hide_gitignore": true,
+    "hide_gitignore": false,
     "button": true,
     "git_status": true,
     "show_diagnostics": "all"
@@ -146,10 +165,10 @@
     "terminal.background": "#00000000",
     "toolbar.background": "#00000000",
     "tab.inactive_background": "#00000000",
-    "tab.active_background": "#19172420",
+    "tab.active_background": "#191724DD",
     "status_bar.background": "#191724BB",
     "title_bar.background": "#191724BB",
-    "elevated_surface.background": "#1f1d2eBB",
+    "elevated_surface.background": "#1f1d2eDD",
     "surface.background": "#90",
     "editor.gutter.background": "#19172410",
     "editor.indent_guide_active": "#6e6a8680",

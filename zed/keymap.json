@@ -5,7 +5,7 @@
       // put key-bindings here if you want them to work in normal & visual mode
       // Git
       "space g h d": "editor::ToggleSelectedDiffHunks",
-      "space g s": "git_panel::ToggleFocus",
+      "space g g": "git_panel::ToggleFocus",
 
       // Toggle inlay hints
       "space t i": "editor::ToggleInlayHints",
@@ -26,7 +26,9 @@
       "space a c": "agent::ToggleFocus",
 
       // Go to file with `gf`
-      "g f": "editor::OpenExcerpts"
+      "g f": "editor::OpenExcerpts",
+
+      "space t h": "workspace::ToggleBottomDock"
     }
   },
   {
@@ -41,7 +43,7 @@
       "ctrl-j": "workspace::ActivatePaneDown",
 
       // +LSP
-      "space c a": "editor::ToggleCodeActions",
+      "space l a": "editor::ToggleCodeActions",
       "space .": "editor::ToggleCodeActions",
       "space c r": "editor::Rename",
       "g d": "editor::GoToDefinition",
@@ -66,6 +68,8 @@
       "] h": "editor::GoToHunk",
       "[ h": "editor::GoToPreviousHunk",
 
+      "}": "tab_switcher::Toggle",
+      "{": "tab_switcher::Toggle",
       // TODO: git diff is not ready yet, refer https://github.com/zed-industries/zed/issues/8665#issuecomment-2194000497
 
       // + Buffers
@@ -83,10 +87,14 @@
       // File finder
       "space space": "file_finder::Toggle",
       // Project search
-      "space f f": "pane::DeploySearch",
+      "space f f": "file_finder::Toggle",
+      "space f w": "pane::DeploySearch",
       // TODO: Open other files
       // Show project panel with current file
-      "space e": "pane::RevealInProjectPanel"
+      "space e": "pane::RevealInProjectPanel",
+
+      "\\": "pane::SplitDown",
+      "|": "pane::SplitRight"
     }
   },
   // Empty pane, set of keybindings that are available when there is no active editor
@@ -113,8 +121,7 @@
   {
     "context": "Editor && vim_mode == insert && !menu",
     "bindings": {
-      "j j": "vim::NormalBefore", // remap jj in insert mode to escape
-      "j k": "vim::NormalBefore" // remap jk in insert mode to escape
+      "ctrl-l": "editor::AcceptEditPrediction"
     }
   },
   // Rename
@@ -136,9 +143,7 @@
   // Toggle terminal
   {
     "context": "Workspace",
-    "bindings": {
-      "space t h": "workspace::ToggleBottomDock"
-    }
+    "bindings": {}
   },
   {
     "context": "Terminal",
@@ -202,6 +207,13 @@
     "bindings": {
       "space p s": ["vim::PushSneak", {}],
       "space p S": ["vim::PushSneakBackward", {}]
+    }
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "}": "menu::SelectNext",
+      "{": "menu::SelectPrevious"
     }
   }
   // Subword motion is not working really nice with `ciw`, disable for now
