@@ -61,9 +61,15 @@
   }, */
   // Uncomment below to use local AI with Ollama, refer https://zed.dev/docs/language-model-integration?highlight=ollama#using-ollama-on-macos
   "agent": {
+    "inline_assistant_model": {
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-latest"
+    },
+    "always_allow_tool_actions": true,
+    "default_profile": "minimal",
     "default_model": {
       "provider": "openai",
-      "model": "qwen/qwen3-32b"
+      "model": "meta-llama/llama-4-maverick-17b-128e-instruct"
     }
   },
   "language_models": {
@@ -74,8 +80,8 @@
       "api_url": "https://api.groq.com/openai/v1",
       "available_models": [
         {
-          "name": "qwen/qwen3-32b",
-          "display_name": "Groq Qwen3-32B",
+          "name": "meta-llama/llama-4-maverick-17b-128e-instruct",
+          "display_name": "Llama 4 Maverick",
           "max_tokens": 131072
         }
       ]
@@ -109,10 +115,10 @@
     "TypeScript": {
       // Refer https://github.com/jellydn/ts-inlay-hints for how to setup for Neovim and VSCode
       "inlay_hints": {
-        "enabled": true,
+        "enabled": false,
         "show_parameter_hints": false,
-        "show_other_hints": true,
-        "show_type_hints": true
+        "show_other_hints": false,
+        "show_type_hints": false
       }
     },
     "Python": {
@@ -158,7 +164,7 @@
   },
   "experimental.theme_overrides": {
     "background.appearance": "blurred",
-    "background": "#191724EE",
+    "background": "#191724EB",
     "editor.background": "#00000000",
     "panel.background": "#00000000",
     "tab_bar.background": "#00000000",

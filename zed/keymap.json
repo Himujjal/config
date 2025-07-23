@@ -79,7 +79,7 @@
       // Close active panel
       "shift-q": "pane::CloseActiveItem",
       "ctrl-q": "pane::CloseActiveItem",
-      "space b d": "pane::CloseActiveItem",
+      "space c": "pane::CloseActiveItem",
       // Close other items
       "space b o": "pane::CloseInactiveItems",
       // Save file

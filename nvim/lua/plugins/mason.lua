@@ -15,6 +15,7 @@ return {
         "zls",
         "tailwindcss",
         "elixirls",
+        "pyright",
         -- add more arguments for adding more language servers
       },
     },
