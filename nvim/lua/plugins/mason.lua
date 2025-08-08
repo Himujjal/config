@@ -10,12 +10,15 @@ return {
       ensure_installed = {
         "lua_ls",
         "gopls",
-        "rust_analyzer",
+        "rust-analyzer",
         "vtsls",
         "zls",
         "tailwindcss",
         "elixirls",
         "pyright",
+        "eslint-lsp",
+        "marksman",
+        "ty"
         -- add more arguments for adding more language servers
       },
     },
@@ -29,7 +32,6 @@ return {
         "stylua",
         "eslint-lsp",
         "prettierd",
-        "swift-format",
         -- add more arguments for adding more null-ls sources
       },
     },

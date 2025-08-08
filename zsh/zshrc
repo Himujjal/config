@@ -303,4 +303,12 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+function crushlm() {
+    if [ -f ~/.config/.env.sh ]; then
+        source ~/.config/.env.sh
+    fi
+    crush
+}
+
+
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

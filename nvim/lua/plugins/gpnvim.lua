@@ -5,8 +5,8 @@ local OPENAI_HOST = "https://api.openai.com/v1/chat/completions"
 
 local GROQ_KEY = env.GROQ_KEY
 local GROQ_HOST = "https://api.groq.com/openai/v1/chat/completions"
+local GROQ_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 
-local GROQ_MODEL = "llama-3.2-11b-text-preview"
 -- local GROQ_MODEL = "deepseek-r1-distill-llama-70b"
 local GROQ_AUDIO = "https://api.groq.com/openai/v1/audio/transcriptions"
 local GROQ_WHISPER_MODEL = "distil-whisper-large-v3-en"
@@ -29,8 +29,8 @@ local CEREBRAS_MODEL = "qwen-3-32b"
 ---@class GpConfig
 -- README_REFERENCE_MARKER_START
 local config = {
-  default_chat_agent = "cerebras",
-  default_command_agent = "cerebras",
+  default_chat_agent = "groq",
+  default_command_agent = "groq",
 
   providers = {
     openai = {
@@ -66,17 +66,8 @@ local config = {
 
   agents = {
     {
-      provider = "cerebras",
-      name = "Cerebras",
-      chat = true,
-      command = true,
-      -- string with model name or table with model name and parameters
-      model = { model = CEREBRAS_MODEL, temperature = 0.2, top_p = 1 },
-      system_prompt = "Given a task or problem, please provide a concise and well-formatted solution or answer.\n\n",
-    },
-    {
       provider = "groq",
-      name = "DeepSeek-R1-OSS",
+      name = "groq",
       chat = true,
       command = true,
       -- string with model name or table with model name and parameters
@@ -84,6 +75,15 @@ local config = {
       system_prompt = "Given a task or problem, please provide a concise and well-formatted solution or answer.\n\n"
         .. "Please keep your response within a code snippet, and avoid unnecessary commentary.\n",
     },
+    -- {
+    --   provider = "cerebras",
+    --   name = "Cerebras",
+    --   chat = true,
+    --   command = true,
+    --   -- string with model name or table with model name and parameters
+    --   model = { model = CEREBRAS_MODEL, temperature = 0.2, top_p = 1 },
+    --   system_prompt = "Given a task or problem, please provide a concise and well-formatted solution or answer.\n\n",
+    -- },
     {
       provider = "openai",
       name = "ChatGPT4o",

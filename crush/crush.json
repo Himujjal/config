@@ -1,0 +1,68 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "lsp": {
+    "go": {
+      "command": "gopls"
+    },
+    "typescript": {
+      "command": "vtsls",
+      "args": [
+        "--stdio"
+      ]
+    }
+  },
+  "mcp": {},
+  "providers": {
+    "lmstudio": {
+      "name": "LM Studio",
+      "base_url": "http://localhost:1234/v1/",
+      "type": "openai",
+      "models": [
+        {
+          "name": "Qwen 3 4B",
+          "id": "lmstudio-community/Qwen3-4B-Instruct-2507-MLX-6bit",
+          "context_window": 25600,
+          "default_max_tokens": 20000,
+          "can_reason": false,
+          "default_reasoning_effort": "0"
+        },
+        {
+          "name": "Qwen 3 0.6B",
+          "id": "qwen3-0.6b",
+          "context_window": 25600,
+          "default_max_tokens": 20000,
+          "can_reason": false,
+          "default_reasoning_effort": "0"
+        }
+      ]
+    },
+    "groq": {
+      "name": "Groq",
+      "base_url": "https://api.groq.com/openai/v1",
+      "type": "openai",
+      "api_key": "$GROQ_API_KEY",
+      "models": [
+        {
+          "name": "Groq Kimi K2",
+          "id": "moonshotai/kimi-k2-instruct",
+          "context_window": 16384,
+          "default_max_tokens": 16384
+        }
+      ]
+    },
+    "cerebras": {
+      "name": "Cerebras",
+      "base_url": "https://api.cerebras.ai/v1",
+      "type": "openai",
+      "api_key": "$CEREBRAS_API_KEY",
+      "models": [
+        {
+          "name": "Cerebras Qwen3-480b",
+          "id": "qwen-3-coder-480b",
+          "context_window": 40000,
+          "default_max_tokens": 40000
+        }
+      ]
+    }
+  }
+}

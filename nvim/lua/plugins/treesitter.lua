@@ -14,6 +14,8 @@ return {
       "json",
       "zig",
       "elixir",
+      "markdown",
+      "markdown_inline"
       -- add more arguments for adding more treesitter parsers
     },
   },

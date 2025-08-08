@@ -22,6 +22,8 @@
       // Open recent project
       "space f p": "projects::OpenRecent",
 
+      "space l f": "editor::Format",
+
       // Chat with AI
       "space a c": "agent::ToggleFocus",
 
@@ -84,8 +86,6 @@
       "space b o": "pane::CloseInactiveItems",
       // Save file
       "ctrl-s": "workspace::Save",
-      // File finder
-      "space space": "file_finder::Toggle",
       // Project search
       "space f f": "file_finder::Toggle",
       "space f w": "pane::DeploySearch",

@@ -41,7 +41,6 @@ return {
       -- "pyright"
       "gleam",
       "sourcekit",
-      "ty",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
