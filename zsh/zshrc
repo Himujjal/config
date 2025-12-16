@@ -233,6 +233,9 @@ export PNPM_HOME="/Users/himujjalupadhyaya/Library/pnpm"
 BUN_INSTALL="$HOME/.bun"
 export BUNBIN=$BUN_INSTALL/bin
 
+# flutter
+FLUTTER_PATH="$HOME/flutter-sdk/flutter/bin"
+
 
 # --------========== PATH ===============
 PATH=$FLUTTER_PATH:$GOBIN:$GOROOTBIN:$CARGOPATH:$LOCAL:$PNPM_HOME:$BUNBIN:$DENO_PATH:$V_PATH:$PATH
@@ -293,6 +296,9 @@ eval "$($MISE activate zsh)"
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/himujjalupadhyaya/.lmstudio/bin"
 # End of LM Studio CLI section
+
+# Avante
+alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'
 
 
 # pnpm

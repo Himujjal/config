@@ -118,33 +118,6 @@ return {
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
   },
-  -- {
-  --   "augmentcode/augment.vim",
-  --   config = function()
-  --     vim.g.augment_workspace_folders = env.AUGMENT_FOLDERS
-  --       or {
-  --         "~/projects/littlebird/Little-Bird-Client",
-  --         "~/projects/littlebird/Little-Bird-Backend",
-  --       }
-  --   end,
-  -- },
-  {
-    "greggh/claude-code.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      window = {
-        position = "vertical",
-      },
-      keymaps = {
-        toggle = {
-          normal = "<C-.>",
-          terminal = "<C-.>",
-          window_navigation = true,
-          scrolling = true,
-        },
-      },
-    },
-  },
   {
     -- Make sure to set this up properly if you have lazy=true
     "MeanderingProgrammer/render-markdown.nvim",

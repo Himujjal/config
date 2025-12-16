@@ -8,207 +8,332 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "icon_theme": "Material Icon Theme",
-  "features": {
-    "edit_prediction_provider": "zed"
-  },
-  "base_keymap": "VSCode",
-  "theme": "Rosé Pine",
-  "ui_font_size": 14,
-  "buffer_font_size": 12,
-  "agent_font_size": 14,
-  // Finder model width
-  "file_finder": {
-    "file_icons": true,
-    "git_status": true,
-    "modal_max_width": "large"
-  },
-  // Vim mode settings
-  "vim_mode": true,
-  "vim": {
-    "use_system_clipboard": "always"
-  },
-  // use relative line numbers
-  "relative_line_numbers": true,
-  "tab_bar": {
-    "show": true
-  },
-  "scrollbar": {
-    "show": "never"
-  },
-  "format_on_save": "off",
-  // Only show error on tab
-  "tabs": {
-    "show_diagnostics": "errors",
-    "file_icons": true
-  },
-  // Indentation, rainbow indentation
-  "indent_guides": {
-    "enabled": true,
-    "coloring": "indent_aware"
-  },
-  // NOTE: Zen mode, refer https://github.com/zed-industries/zed/issues/4382 when it's resolved
-  "centered_layout": {
-    "left_padding": 0.15,
-    "right_padding": 0.15
-  },
-  // Use Copilot Chat AI as default
-  /* Duplicated key auto-commented: "agent": {
-    "default_profile": "minimal",
+	"edit_predictions": {
+		"mode": "eager"
+	},
+	"icon_theme": "Material Icon Theme",
+	"show_completions_on_input": true,
+	"features": {
+		"edit_prediction_provider": "supermaven"
+	},
+	"base_keymap": "VSCode",
+	"theme": "Rosé Pine",
+	"ui_font_size": 15.0,
+	"buffer_font_size": 12.0,
+	"agent_ui_font_size": 12.0,
+	// Finder model width
+	"file_finder": {
+		"file_icons": true,
+		"git_status": true,
+		"modal_max_width": "large"
+	},
+	// Vim mode settings
+	"vim_mode": true,
+	"vim": {
+		"use_system_clipboard": "always"
+	},
+	// use relative line numbers
+	"relative_line_numbers": "enabled",
+	"tab_bar": {
+		"show": true
+	},
+	"scrollbar": {
+		"show": "never"
+	},
+	"format_on_save": "off",
+	// Only show error on tab
+	"tabs": {
+		"show_diagnostics": "errors",
+		"file_icons": true
+	},
+	// Indentation, rainbow indentation
+	"indent_guides": {
+		"enabled": true,
+		"coloring": "indent_aware"
+	},
+	// NOTE: Zen mode, refer https://github.com/zed-industries/zed/issues/4382 when it's resolved
+	"centered_layout": {
+		"left_padding": 0.15,
+		"right_padding": 0.15
+	},
+	// Uncomment below to use local AI with Ollama, refer https://zed.dev/docs/language-model-integration?highlight=ollama#using-ollama-on-macos
+	"agent": {
+		"profiles": {
+   "no-think": {
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-3-7-sonnet"
-    }
-  }, */
-  // Uncomment below to use local AI with Ollama, refer https://zed.dev/docs/language-model-integration?highlight=ollama#using-ollama-on-macos
-  "agent": {
-    "profiles": {
-      "no-think-minimal": {
-        "name": "no-think-minimal",
-        "tools": {},
-        "enable_all_context_servers": false,
-        "context_servers": {}
-      }
+     "provider": "Groq",
+     "model": "moonshotai/kimi-k2-instruct-0905"
     },
-    "inline_assistant_model": {
-      "provider": "anthropic",
-      "model": "claude-3-5-sonnet-latest"
-    },
-    "always_allow_tool_actions": true,
-    "default_profile": "minimal",
-    "default_model": {
-      "provider": "openai",
-      "model": "meta-llama/llama-4-maverick-17b-128e-instruct"
-    }
+    "name": "No think",
+    "tools": {},
+    "enable_all_context_servers": false,
+    "context_servers": {}
+   }
   },
-  "language_models": {
-    "ollama": {
-      "api_url": "http://localhost:11434"
-    },
-    "lmstudio": {
-      "api_url": "http://localhost:1234/v1",
-      "available_models": [
-        {
-          "name": "qwen3-0.6b",
-          "display_name": "Qwen0.6B",
-          "supports_images": false,
-          "max_tokens": 40960,
-          "supports_tool_calls": true
-        },
-        {
-          "name": "qwen/qwen3-4b",
-          "display_name": "Qwen3 4B",
-          "supports_images": false,
-          "max_tokens": 40960,
-          "supports_tool_calls": true
-        }
-      ]
-    },
-    "openai": {
-      "api_url": "https://api.groq.com/openai/v1",
-      "available_models": [
-        {
-          "name": "meta-llama/llama-4-maverick-17b-128e-instruct",
-          "display_name": "Llama 4 Maverick",
-          "max_tokens": 131072
-        }
-      ]
-    }
+  "default_model": {
+   "provider": "Groq",
+   "model": "moonshotai/kimi-k2-instruct-0905"
   },
-  // Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
-  "inlay_hints": {
-    "enabled": false
-  },
-  // LSP
-  "lsp": {
-    "tailwindcss-language-server": {
-      "settings": {
-        "classAttributes": ["class", "className", "ngClass", "styles"]
-      }
-    },
-    "pyright": {
-      "settings": {
-        "python.analysis": {
-          "diagnosticMode": "workspace",
-          "typeCheckingMode": "strict"
-        },
-        "python": {
-          "pythonPath": ".venv/bin/python"
-        }
-      }
-    }
-  },
-  "languages": {
-    // Refer https://zed.dev/docs/languages/javascript and https://zed.dev/docs/languages/typescript for more info
-    "TypeScript": {
-      // Refer https://github.com/jellydn/ts-inlay-hints for how to setup for Neovim and VSCode
-      "inlay_hints": {
-        "enabled": false,
-        "show_parameter_hints": false,
-        "show_other_hints": false,
-        "show_type_hints": false
-      }
-    },
-    "Python": {
-      "formatter": { "language_server": { "name": "ruff" } }
-    },
-    "Swift": {
-      "format_on_save": "off"
-    }
-  },
-  // Use zed commit editor
-  "terminal": {
-    "env": {
-      "EDITOR": "zed --wait"
-    }
-  },
-  // File syntax highlighting
-  "file_types": {
-    "Dockerfile": ["Dockerfile", "Dockerfile.*"],
-    "JSON": ["json", "jsonc", "*.code-snippets"]
-  },
-  // Turn off telemetry
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
-  },
-  // Move all panel to the right
-  "project_panel": {
-    "hide_gitignore": true,
-    "button": true,
-    "git_status": true,
-    "show_diagnostics": "all"
-  },
-  "outline_panel": {
-    "dock": "right",
-    "file_icons": true
-  },
-  "collaboration_panel": {
-    "dock": "left"
-  },
-  // Move some unnecessary panels to the left
-  "notification_panel": {
-    "dock": "left"
-  },
-  "chat_panel": {
-    "dock": "left"
-  },
-  "experimental.theme_overrides": {
-    "background.appearance": "blurred",
-    "background": "#191724EB",
-    "editor.background": "#00000000",
-    "panel.background": "#00000000",
-    "tab_bar.background": "#00000000",
-    "terminal.background": "#00000000",
-    "toolbar.background": "#00000000",
-    "tab.inactive_background": "#00000000",
-    "tab.active_background": "#191724DD",
-    "status_bar.background": "#191724BB",
-    "title_bar.background": "#191724BB",
-    "elevated_surface.background": "#1f1d2eDD",
-    "surface.background": "#90",
-    "editor.gutter.background": "#19172410",
-    "editor.indent_guide_active": "#6e6a8680",
-    "editor.active_line.background": "#1f1d2e20"
-  }
+  "default_profile": "no-think",
+		"model_parameters": []
+	},
+	"agent_servers": {
+		"OpenCode": {
+			"type": "custom",
+			"command": "opencode",
+			"args": ["acp"]
+		}
+	},
+	"language_models": {
+		"ollama": {
+			"api_url": "http://localhost:11434"
+		},
+		"lmstudio": {
+			"api_url": "http://localhost:1234/v1",
+			"available_models": [
+				{
+					"name": "qwen3-0.6b",
+					"display_name": "Qwen0.6B",
+					"supports_images": false,
+					"max_tokens": 40960,
+					"supports_tool_calls": true
+				},
+				{
+					"name": "qwen/qwen3-4b",
+					"display_name": "Qwen3 4B",
+					"supports_images": false,
+					"max_tokens": 40960,
+					"supports_tool_calls": true
+				}
+			]
+		},
+		"openai_compatible": {
+			"Cerebras": {
+				"api_url": "https://api.cerebras.ai/v1",
+				"available_models": [
+					{
+						"name": "llama3.1-8b",
+						"max_tokens": 8000,
+						"max_output_tokens": 8000,
+						"max_completion_tokens": 8000,
+						"capabilities": {
+							"tools": false,
+							"images": false,
+							"parallel_tool_calls": false,
+							"prompt_cache_key": false
+						}
+					},
+					{
+						"name": "gpt-oss-120b",
+						"max_tokens": 32000,
+						"max_output_tokens": 32000,
+						"max_completion_tokens": 65000,
+						"capabilities": {
+							"tools": true,
+							"images": false,
+							"parallel_tool_calls": false,
+							"prompt_cache_key": false
+						}
+					},
+					{
+						"name": "zai-glm-4.6",
+						"max_tokens": 40000,
+						"max_output_tokens": 40000,
+						"max_completion_tokens": 64000,
+						"capabilities": {
+							"tools": true,
+							"images": false,
+							"parallel_tool_calls": false,
+							"prompt_cache_key": false
+						}
+					},
+					{
+						"name": "qwen-3-235b-a22b-instruct-2507",
+						"max_tokens": 32000,
+						"max_output_tokens": 32000,
+						"max_completion_tokens": 65000,
+						"capabilities": {
+							"tools": true,
+							"images": false,
+							"parallel_tool_calls": false,
+							"prompt_cache_key": false
+						}
+					}
+				]
+			},
+			"Groq": {
+				"api_url": "https://api.groq.com/openai/v1",
+				"available_models": [
+					{
+						"name": "moonshotai/kimi-k2-instruct-0905",
+						"max_tokens": 16384,
+						"max_output_tokens": 16384,
+						"max_completion_tokens": 16384,
+						"capabilities": {
+							"tools": true,
+							"images": false,
+							"parallel_tool_calls": false,
+							"prompt_cache_key": false
+						}
+					}
+				]
+			}
+		}
+	},
+	// Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
+	"inlay_hints": {
+		"enabled": false
+	},
+	// LSP
+	"lsp": {
+		"tailwindcss-language-server": {
+			"settings": {
+				"classAttributes": [
+					"class",
+					"className",
+					"headerClassName",
+					"contentContainerClassName",
+					"columnWrapperClassName",
+					"endFillColorClassName",
+					"imageClassName",
+					"tintColorClassName",
+					"ios_backgroundColorClassName",
+					"thumbColorClassName",
+					"trackColorOnClassName",
+					"trackColorOffClassName",
+					"selectionColorClassName",
+					"cursorColorClassName",
+					"underlineColorAndroidClassName",
+					"placeholderTextColorClassName",
+					"selectionHandleColorClassName",
+					"colorsClassName",
+					"progressBackgroundColorClassName",
+					"titleColorClassName",
+					"underlayColorClassName",
+					"colorClassName",
+					"drawerBackgroundColorClassName",
+					"statusBarBackgroundColorClassName",
+					"backdropColorClassName",
+					"backgroundColorClassName",
+					"ListFooterComponentClassName",
+					"ListHeaderComponentClassName"
+				],
+				"classFunctions": ["useResolveClassNames"]
+			}
+		},
+		"pyright": {
+			"settings": {
+				"python.analysis": {
+					"diagnosticMode": "workspace",
+					"typeCheckingMode": "strict"
+				},
+				"python": {
+					"pythonPath": ".venv/bin/python"
+				}
+			}
+		},
+		"biome": {
+			"settings": {
+				"require_config_file": false
+			}
+		}
+	},
+	"languages": {
+		// Refer https://zed.dev/docs/languages/javascript and https://zed.dev/docs/languages/typescript for more info
+		"TypeScript": {
+			// Refer https://github.com/jellydn/ts-inlay-hints for how to setup for Neovim and VSCode
+			"inlay_hints": {
+				"enabled": false,
+				"show_parameter_hints": false,
+				"show_other_hints": false,
+				"show_type_hints": false
+			},
+			"formatter": { "language_server": { "name": "biome" } },
+			"language_servers": [
+				"biome",
+				"vtsls",
+				"tailwindcss-language-server",
+				"oxlint"
+			],
+			"code_actions_on_format": {
+				"source.fixAll.biome": true,
+				"source.organizeImports.biome": true
+			},
+			"format_on_save": "on"
+		},
+		"HTML": {
+			"language_servers": ["biome"],
+			"formatter": { "language_server": { "name": "biome" } }
+		},
+		"TSX": {
+			"language_servers": [
+				"biome",
+				"vtsls",
+				"tailwindcss-language-server",
+				"oxlint"
+			],
+			"formatter": { "language_server": { "name": "biome" } },
+			"format_on_save": "on"
+		},
+		"JSONC": { "formatter": { "language_server": { "name": "biome" } } },
+		"Python": {
+			"formatter": { "language_server": { "name": "ruff" } }
+		},
+		"Swift": {
+			"format_on_save": "off"
+		}
+	},
+	// Use zed commit editor
+	"terminal": {
+		"env": {
+			"EDITOR": "zed --wait"
+		}
+	},
+	// File syntax highlighting
+	"file_types": {
+		"Dockerfile": ["Dockerfile", "Dockerfile.*"],
+		"JSON": ["json", "jsonc", "*.code-snippets"]
+	},
+	// Turn off telemetry
+	"telemetry": {
+		"diagnostics": false,
+		"metrics": false
+	},
+	// Move all panel to the right
+	"project_panel": {
+		"hide_hidden": false,
+		"hide_gitignore": false
+	},
+	"outline_panel": {
+		"dock": "right",
+		"file_icons": true
+	},
+	"collaboration_panel": {
+		"dock": "left"
+	},
+	// Move some unnecessary panels to the left
+	"notification_panel": {
+		"dock": "left"
+	},
+	"chat_panel": {
+		"dock": "left"
+	},
+	"experimental.theme_overrides": {
+		"background.appearance": "blurred",
+		"background": "#191724EB",
+		"editor.background": "#00000000",
+		"panel.background": "#00000000",
+		"tab_bar.background": "#00000000",
+		"terminal.background": "#00000000",
+		"toolbar.background": "#00000000",
+		"tab.inactive_background": "#00000000",
+		"tab.active_background": "#191724DD",
+		"status_bar.background": "#191724BB",
+		"title_bar.background": "#191724BB",
+		"elevated_surface.background": "#1f1d2eDD",
+		"surface.background": "#90",
+		"editor.gutter.background": "#19172410",
+		"editor.indent_guide_active": "#6e6a8680",
+		"editor.active_line.background": "#1f1d2e20"
+	}
 }

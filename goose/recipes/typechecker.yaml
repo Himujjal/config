@@ -1,0 +1,13 @@
+version: 1.0.0
+title: Typechecker
+description: Checks the type for errors
+instructions: |-
+  Run the following bash program to check for typescript errors:
+
+  ```sh
+  bun run typecheck
+  ```
+extensions: []
+activities:
+- message:Typechecking.....
+parameters: []

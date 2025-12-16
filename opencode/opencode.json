@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "opencode",
+  "model": "accounts/himujjal/deployedModels/deepseek-v3p2-lpryj3px",
+  "provider": {
+    "fireworks-personal": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Fireworks AI Personal",
+      "options": {
+        "baseURL": "https://api.fireworks.ai/inference/v1",
+        "apiKey": "{env:FIREWORKS_API_KEY}",
+        "headers": {
+          "Authorization": "Bearer {env:FIREWORKS_API_KEY}"
+        }
+      },
+      "models": {
+        "accounts/himujjal/deployedModels/deepseek-v3p2-lpryj3px": {
+          "name": "Deepseek v3.2"
+        }
+      }
+    }
+  },
+  "autoupdate": true
+}

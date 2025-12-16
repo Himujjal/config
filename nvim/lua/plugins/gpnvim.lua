@@ -5,7 +5,7 @@ local OPENAI_HOST = "https://api.openai.com/v1/chat/completions"
 
 local GROQ_KEY = env.GROQ_KEY
 local GROQ_HOST = "https://api.groq.com/openai/v1/chat/completions"
-local GROQ_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
+local GROQ_MODEL = "moonshotai/kimi-k2-instruct-0905"
 
 -- local GROQ_MODEL = "deepseek-r1-distill-llama-70b"
 local GROQ_AUDIO = "https://api.groq.com/openai/v1/audio/transcriptions"

@@ -1,0 +1,29 @@
+{
+  "name": "custom_sambanova",
+  "engine": "openai",
+  "display_name": "Sambanova",
+  "description": "Custom Sambanova provider",
+  "api_key_env": "CUSTOM_SAMBANOVA_API_KEY",
+  "base_url": "https://api.sambanova.ai/v1/chat/completions",
+  "models": [
+    {
+      "name": "DeepSeek-R1-0528",
+      "context_limit": 128000,
+      "input_token_cost": null,
+      "output_token_cost": null,
+      "currency": null,
+      "supports_cache_control": null
+    },
+    {
+      "name": "Llama-4-Maverick-17B-128E-Instruct",
+      "context_limit": 128000,
+      "input_token_cost": null,
+      "output_token_cost": null,
+      "currency": null,
+      "supports_cache_control": null
+    }
+  ],
+  "headers": null,
+  "timeout_seconds": null,
+  "supports_streaming": true
+}

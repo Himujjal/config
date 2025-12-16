@@ -1,0 +1,17 @@
+version: 1.0.0
+title: UI Documentation maker
+description: A documentation maker for making the documentation being auto-generated for the `ui` library and the AGENT.md
+instructions: |-
+  Create documentation for @ui package in the same folder. If the documentation is present, read it and update it.
+
+
+  The basic purpose is to have a markdown based documentation of the current library such that human beings and agents could use this library to create React UIs in other parts of the app.
+
+  Go through all the non-demo files and figure out the props which will be written in the documentation.
+
+  Then go through the demo components that are being used in @playground.tsx which showcase the use of these components
+extensions: []
+activities:
+- message:Creating `ui` documentation.
+- UI Doc
+parameters: []

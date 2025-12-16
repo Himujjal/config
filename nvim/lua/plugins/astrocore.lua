@@ -75,15 +75,11 @@ return {
         ["<C-g>a"] = { ":GpAppend<cr>", desc = "Append" },
         ["<C-g>A"] = { ":GpWhisperAppend<cr>", desc = "Whisper Append" },
 
-        ["<leader>A"] = { name = "Augment commands" },
-        ["<leader>AC"] = { "<cmd>Augment chat<cr>", desc = "Chat with Augment" },
-        ["<leader>AN"] = { "<cmd>Augment chat-new<cr>", desc = "New Augment chat" },
-        ["<leader>AT"] = { "<cmd>Augment chat-toggle<cr>", desc = "Toggle Augment chat" },
-
         ["<leader>aC"] = { "<cmd>AvanteClear<cr>", desc = "Clear Avante Chat Context" },
 
-        ["<c-c>"] = { ":%y+<cr><cr>", desc = "Copy file content", silent = true }, -- copies the file contents and then returns back to the position it was in
+        ["<C-a>"] = { ":%y+<cr><cr>", desc = "Copy file content", silent = true }, -- copies the file contents and then returns back to the position it was in
         ["<leader>mp"] = { "<cmd>PeekOpen<cr>", desc = "Open markdown preview" },
+        ["<leader>cc"] = { "<cmd>bdelete<cr>", desc = "Close the buffer" },
       },
       v = {
         -- search in visual mode
