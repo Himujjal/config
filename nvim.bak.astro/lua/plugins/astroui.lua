@@ -14,11 +14,11 @@ return {
     -- colorscheme = "catppuccin-mocha",
     -- colorscheme = "catppuccin-frappe",
     -- colorscheme = "catppuccin-latte",
-    -- colorscheme = "catppuccin-macchiato",
+    colorscheme = "catppuccin-macchiato",
     -- colorscheme = "gruvbox",
     -- colorscheme = "tokyodark",
     -- colorscheme = "tokyonight-storm",
-    colorscheme = "rose-pine",
+    -- colorscheme = "rose-pine",
     -- colorscheme = "onedark",
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {
