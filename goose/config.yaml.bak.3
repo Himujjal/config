@@ -1,5 +1,5 @@
-GOOSE_PROVIDER: custom_cerebras
-GOOSE_MODEL: llama3.1-8b
+GOOSE_PROVIDER: groq
+GOOSE_MODEL: moonshotai/kimi-k2-instruct-0905
 extensions:
   developer:
     enabled: true
@@ -100,6 +100,19 @@ extensions:
     envs: {}
     env_keys:
     - TAVILY_API_KEY
+    timeout: 300
+    bundled: null
+    available_tools: []
+  zigdoc:
+    enabled: false
+    type: stdio
+    name: Zigdoc
+    description: For anything related to the latest zig and the libraries in the project folder, just run `zigdoc` for the same
+    cmd: zigdoc
+    args:
+    - <symbol>
+    envs: {}
+    env_keys: []
     timeout: 300
     bundled: null
     available_tools: []

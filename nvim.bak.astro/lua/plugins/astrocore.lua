@@ -79,7 +79,7 @@ return {
 
         ["<C-a>"] = { ":%y+<cr><cr>", desc = "Copy file content", silent = true }, -- copies the file contents and then returns back to the position it was in
         ["<leader>mp"] = { "<cmd>PeekOpen<cr>", desc = "Open markdown preview" },
-        ["<leader>cc"] = { "<cmd>bdelete<cr>", desc = "Close the buffer" },
+        ["<leader>c"] = { "<cmd>bdelete<cr>", desc = "Close the buffer" },
       },
       v = {
         -- search in visual mode

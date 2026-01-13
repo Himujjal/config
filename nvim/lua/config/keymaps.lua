@@ -2,20 +2,26 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
--- `zz` for saving
---
---
 local function buf_nav(step)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  vim.cmd(string.format("%dbuffer", vim.fn.bufnr("#") + step))
-end
+  local bufs = vim.tbl_filter(function(b)
+    return vim.bo[b].buflisted and vim.bo[b].bufhidden == ""
+  end, vim.api.nvim_list_bufs())
 
-local function new_file()
-  vim.ui.input({ prompt = "New file: ", completion = "file" }, function(name)
-    if name and name ~= "" then
-      vim.cmd("edit " .. name)
+  if #bufs == 0 then
+    return
+  end
+
+  local cur = vim.api.nvim_get_current_buf()
+  local idx = 0
+  for i, b in ipairs(bufs) do
+    if b == cur then
+      idx = i
+      break
     end
-  end)
+  end
+
+  idx = (idx + step - 1) % #bufs + 1
+  vim.api.nvim_set_current_buf(bufs[idx])
 end
 
 local function buffer_close_picker()
@@ -47,28 +53,106 @@ local mappings = {
       desc = "Previous buffer",
     },
     ["zz"] = { "<cmd>w!<cr>", desc = "Save files" },
-    ["<C-,>"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle NvimTree" },
-    ["<Leader>bn"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-    ["<Leader>b"] = { name = "Buffers" },
-    ["<C-g>"] = { name = "Gp.nvim commands" },
-    ["<C-g><C-g>"] = { ":GpChatToggle vsplit<cr>", desc = "Toggle Chat (Normal)" },
-    ["<C-g>r"] = { ":GpRewrite<cr>", desc = "Inline Assist (Rewrite)" },
-    ["<C-g>R"] = { ":GpWhisperRewrite<cr>", desc = "Whisper Inline Assist" },
-    ["<C-g>w"] = { ":GpWhisper<cr>", desc = "Whisper Inline Assist" },
-    ["<C-g>a"] = { ":GpAppend<cr>", desc = "Append" },
-    ["<C-g>A"] = { ":GpWhisperAppend<cr>", desc = "Whisper Append" },
-    ["<leader>aC"] = { "<cmd>AvanteClear<cr>", desc = "Clear Avante Chat Context" },
+    ["<leader>bn"] = { "<cmd>tabnew<cr>", desc = "New tab" },
+    ["s"] = { "ciw", desc = "Replace the word under the cursor with the selected text" },
+    ["<Leader>bD"] = { buffer_close_picker, desc = "Pick to close" },
     ["<C-a>"] = { ":%y+<cr><cr>", desc = "Copy file content", silent = true },
     ["<leader>mp"] = { "<cmd>PeekOpen<cr>", desc = "Open markdown preview" },
-    ["<leader>cc"] = { "<cmd>bdelete<cr>", desc = "Close the buffer" },
+    ["<C-c>"] = { "<cmd>bdelete<cr>", desc = "Close the buffer" },
+    ["<s-L>"] = { "<c-u>", desc = "Lazy" },
+    ["<s-H>"] = { "<c-d>", desc = "Lazy" },
+
+    ["|"] = { "<Cmd>vsplit<CR>", "Vsplit current buffer" },
+    ["\\"] = { "<Cmd>split<CR>", "Horizontal split current buffer" },
+
+    ["<leader>L"] = { "<cmd>Lazy<cr>", desc = "Lazy" },
+
+    -- formatting and code actions
+    ["<leader>l"] = { name = "Code Actions" },
+    ["<leader>lf"] = { vim.lsp.buf.format, desc = "Format" },
+    ["<leader>la"] = { vim.lsp.buf.code_action, desc = "Code Action" },
+    ["<leader>ls"] = {
+      function()
+        vim.lsp.buf.document_symbol({})
+      end,
+      desc = "Symbols",
+    },
+
+    -- Sidekick additions – normal-mode only unless otherwise noted
+    ["<leader>a"] = { name = "AI Sidekick" },
+    ["<leader>aa"] = {
+      function()
+        require("sidekick.cli").toggle()
+      end,
+      desc = "Sidekick Toggle CLI",
+    },
+    ["<leader>as"] = {
+      function()
+        require("sidekick.cli").select()
+      end,
+      desc = "Select CLI",
+    },
+    ["<leader>ad"] = {
+      function()
+        require("sidekick.cli").close()
+      end,
+      desc = "Detach a CLI Session",
+    },
+    ["<leader>af"] = {
+      function()
+        require("sidekick.cli").send({ msg = "{file}" })
+      end,
+      desc = "Send File",
+    },
+    ["<leader>ap"] = {
+      function()
+        require("sidekick.cli").prompt()
+      end,
+      desc = "Sidekick Select Prompt",
+    },
+    ["<leader>ao"] = {
+      function()
+        require("sidekick.cli").toggle({ name = "opencode", focus = true })
+      end,
+      desc = "Sidekick Toggle OpenCode",
+    },
   },
   v = {
     ["/"] = { [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], silent = true, desc = "Search in visual mode" },
+
+    -- visual-only Sidekick maps
+    ["<leader>at"] = {
+      function()
+        require("sidekick.cli").send({ msg = "{this}" })
+      end,
+      desc = "Send This",
+    },
+    ["<leader>av"] = {
+      function()
+        require("sidekick.cli").send({ msg = "{selection}" })
+      end,
+      desc = "Send Visual Selection",
+    },
+    ["<leader>ap"] = {
+      function()
+        require("sidekick.cli").prompt()
+      end,
+      desc = "Sidekick Select Prompt",
+    },
+    ["s"] = { "c", desc = "Replace the word under the cursor with the selected text" },
   },
   i = {
-    ["<C-l>"] = { "<cmd>call augment#Accept()<cr>", desc = "Accept suggestion" },
+    ["<C-l>"] = {
+      function()
+        LazyVim.cmp.actions.ai_accept()
+      end,
+      desc = "Close the buffer",
+    },
   },
 }
+
+-- Delete previous mappings
+vim.keymap.del("n", "<leader>l")
 
 for mode, maps in pairs(mappings) do
   for lhs, def in pairs(maps) do
@@ -81,7 +165,7 @@ for mode, maps in pairs(mappings) do
     local desc = def.desc or nil
     local opts = { desc = desc, noremap = true, silent = def.silent or false }
 
-    vim.keymap.set(mode, lhs, rhs, opts)
+    LazyVim.safe_keymap_set(mode, lhs, rhs, opts)
     ::continue::
   end
 end

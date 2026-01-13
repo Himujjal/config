@@ -20,5 +20,12 @@
       }
     }
   },
-  "autoupdate": true
+  "autoupdate": true,
+  "mcp": {
+    "brave": {
+      "type": "remote",
+      "url": "https://server.smithery.ai/brave/mcp",
+      "headers": {}
+    }
+  }
 }

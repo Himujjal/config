@@ -121,16 +121,39 @@ alias npmi="pnpm init -y"
 
 alias pip="pip3"
 
+function editor() {
+  # if neovide is present, use it
+  # if command -v neovide &> /dev/null; then
+  #   neovide "$@"
+  # else
+    nvim "$@"
+  # fi
+}
+
 # Git
 alias gitcl="git clone"
 alias gitcl1="git clone --depth=1"
 alias gitclr="git clone --recurse-submodules"
 
+function confraycast() {
+	curr=$PWD
+	cd ~/.config/raycast/scripts
+	neovide .
+	cd $curr
+}
+
+function confwebblocker() {
+  curr=$PWD
+  sudo nvim /etc/hosts
+  cd $curr
+  sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+}
+
 # alias confnvim="nvim ~/.config/nvim"
 function confnvim() {
 	curr=$PWD
 	cd ~/.config/nvim
-	nvim .
+	editor .
 	cd $curr
 }
 
@@ -144,21 +167,41 @@ function conf() {
 function confzsh() {
  curr=$PWD
  cd ~/.config/zsh
- nvim zshrc
+ editor zshrc
  source ~/.zshrc
  cd $curr
+}
+
+alias cdsaanvi="cd ~/projects/saanvi/Saanvi"
+
+function zbd() {
+    echo "Testing zig function $1"
+
+    cmd_args="-freference-trace=16"
+
+    if [ -n "$1" ]; then
+      cmd_args="$cmd_args -Dtest-filter=\"$1\""
+    fi
+    watchexec -w src -w build.zig -r "clear && echo 'Running test: $1' && zig build test $cmd_args"
 }
 
 function conftty() {
     curr=$PWD
     cd ~/.config/ghostty
-    nvim config
+    editor config
     cd $curr
 }
 
 function obs() {
     curr=$PWD
     cd ~/Documents/obsidian-personal
+    editor .
+    cd $curr
+}
+
+function saanvi() {
+    curr=$PWD
+    cd ~/projects/saanvi/Saanvi
     nvim .
     cd $curr
 }
@@ -289,8 +332,11 @@ function confirm() {
 autoload bashcompinit
 
 # ---- activate mise -----
-MISE=$(which mise)
-eval "$($MISE activate zsh)"
+# MISE=$(which mise)
+# eval "$($MISE activate zsh)"
+if command -v mise &>/dev/null; then
+    eval "$(mise activate zsh)"
+fi
 
 
 # Added by LM Studio CLI (lms)

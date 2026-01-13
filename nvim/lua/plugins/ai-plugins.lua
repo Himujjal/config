@@ -1,17 +1,31 @@
 return {
   {
     "supermaven-inc/supermaven-nvim",
-    event = "BufRead",
-    config = function()
-      require("supermaven-nvim").setup({
-        keymaps = {
-          accept_suggestion = "<C-l>",
-          accept_word = "<C-k>",
-          clear_suggestion = "<C-c>",
-        },
-        disable_keymaps = false, -- disables built in keymaps for more manual control
-        log_level = "off",
-      })
+    opts = function()
+      require("supermaven-nvim.completion_preview").suggestion_group = "SupermavenSuggestion"
+
+      LazyVim.cmp.actions.ai_accept = function()
+        local suggestion = require("supermaven-nvim.completion_preview")
+        if suggestion.has_suggestion() then
+          LazyVim.create_undo()
+          vim.schedule(function()
+            suggestion.on_accept_suggestion()
+          end)
+          return true
+        end
+      end
     end,
+  },
+  {
+    "folke/sidekick.nvim",
+    opts = {
+      -- add any options here
+      cli = {
+        mux = {
+          backend = "zellij",
+          enabled = true,
+        },
+      },
+    },
   },
 }
