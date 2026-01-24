@@ -2,7 +2,7 @@
 duckdb = "1.3.2"
 java = "21"
 odin = "latest"
-zig = "latest"
+zig = "master"
 zls = "latest"
 
 [settings]

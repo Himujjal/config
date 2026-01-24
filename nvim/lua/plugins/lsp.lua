@@ -6,6 +6,11 @@ return {
       local nls = require("null-ls")
       opts.sources = opts.sources or {}
       table.insert(opts.sources, nls.builtins.formatting.biome)
+      
+      -- Add custom biome formatter for ek files
+      table.insert(opts.sources, nls.builtins.formatting.biome.with({
+        filetypes = { "ek" },
+      }))
     end,
   },
   {

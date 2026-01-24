@@ -1,7 +1,10 @@
 # theming
-theme = rose-pine
-background-opacity = 0.95 
+theme=Rose Pine
+background-opacity = 0.95
 background-blur = true
+background-image=$HOME/projects/saanvi/assets/saanvi-dark-landscape.jpg
+background-image-opacity=0.5
+
 
 # keybinds
 keybind = cmd+right=new_split:right
