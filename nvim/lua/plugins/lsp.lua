@@ -6,11 +6,14 @@ return {
       local nls = require("null-ls")
       opts.sources = opts.sources or {}
       table.insert(opts.sources, nls.builtins.formatting.biome)
-      
+
       -- Add custom biome formatter for ek files
-      table.insert(opts.sources, nls.builtins.formatting.biome.with({
-        filetypes = { "ek" },
-      }))
+      table.insert(
+        opts.sources,
+        nls.builtins.formatting.biome.with({
+          filetypes = { "ek" },
+        })
+      )
     end,
   },
   {
@@ -20,7 +23,9 @@ return {
       ---@type lspconfig.options
       servers = {
         -- pyright will be automatically installed with mason and loaded with lspconfig
-        biome = {},
+        biome = {
+          filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc" },
+        },
         gopls = {},
         jsonls = {},
         lua_ls = {},

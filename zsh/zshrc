@@ -361,3 +361,10 @@ function vnv() {
   source .venv/bin/activate
   nvim "$@"
 } 
+
+function aichat() {
+  curr=$PWD
+  cd /Users/himujjalupadhyaya/temp/simple_chat
+  opencode --agent aichat
+  cd $curr
+}

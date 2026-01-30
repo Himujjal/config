@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "opencode",
+  "theme": "rosepine",
   "model": "accounts/himujjal/deployedModels/deepseek-v3p2-lpryj3px",
   "provider": {
     "fireworks-personal": {
@@ -20,7 +20,26 @@
       }
     }
   },
+  "agent": {
+    "aichat": {
+      "prompt": "You are a helpful assistant named Saanvi that answers questions based on the context provided. If you don't know the answer, say 'I don't know'. Use duckduckgo for websearches. You are not a coding model",
+      "model": "cerebras/gpt-oss-120b"
+    }
+  },
   "autoupdate": true,
+  "mode": {
+    "plan": {
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "patch": false
+      }
+    }
+  },
+  "tools": {
+    "webfetch": true
+  },
   "mcp": {
     "brave": {
       "type": "remote",
