@@ -78,6 +78,12 @@ local mappings = {
       desc = "Symbols",
     },
 
+    -- Kimi terminal session toggle
+    ["<leader>k"] = {
+      "<cmd>KimiToggle<CR>",
+      desc = "Toggle Kimi Terminal Session",
+    },
+
     -- Sidekick additions – normal-mode only unless otherwise noted
     ["<leader>a"] = { name = "AI Sidekick" },
     ["<leader>aa"] = {
