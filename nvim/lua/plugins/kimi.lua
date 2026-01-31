@@ -73,6 +73,12 @@ vim.api.nvim_create_user_command("KimiToggle", function()
     silent = true,
     desc = "Move to left window from terminal",
   })
+  -- <C-c> to go to normal mode
+  vim.api.nvim_buf_set_keymap(kimi_term_buf, "t", "<C-c>", "<C-\\><C-n>", {
+    noremap = true,
+    silent = true,
+    desc = "Exit to normal mode from terminal",
+  })
 end, { desc = "Toggle Kimi terminal session" })
 
 -- Autocommand to enter insert mode when kimi terminal buffer is active
