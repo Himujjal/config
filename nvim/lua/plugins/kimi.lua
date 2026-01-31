@@ -35,6 +35,10 @@ function M.toggle_kimi_session()
   vim.api.nvim_win_set_buf(kimi_term_win, kimi_term_buf)
   vim.api.nvim_win_set_width(kimi_term_win, term_width)
 
+  -- Enable text wrapping in the terminal window
+  vim.api.nvim_set_option_value("wrap", true, { win = kimi_term_win })
+  vim.api.nvim_set_option_value("linebreak", true, { win = kimi_term_win })
+
   -- Start terminal if not already running
   local term_chan = vim.b[kimi_term_buf].terminal_job_id
   if not term_chan then
@@ -125,6 +129,9 @@ function M.send_visual_selection()
       kimi_term_win = vim.api.nvim_get_current_win()
       vim.api.nvim_win_set_buf(kimi_term_win, kimi_term_buf)
       vim.api.nvim_win_set_width(kimi_term_win, term_width)
+      -- Enable text wrapping in the terminal window
+      vim.api.nvim_set_option_value("wrap", true, { win = kimi_term_win })
+      vim.api.nvim_set_option_value("linebreak", true, { win = kimi_term_win })
     end
   end
 
