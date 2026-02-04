@@ -1,5 +1,5 @@
 -- Kimi terminal session management for Neovim
--- Opens a kimi session in a terminal buffer on the right side (1/4 width)
+-- Opens a kimi session in a terminal buffer on the right side (1/3 width)
 -- Buffer is unlisted so it doesn't appear in buffer tabs
 
 local M = {}
@@ -25,9 +25,9 @@ function M.toggle_kimi_session()
     vim.api.nvim_set_option_value("bufhidden", "hide", { buf = kimi_term_buf })
   end
 
-  -- Calculate width (1/4 of screen)
+  -- Calculate width (1/3 of screen)
   local total_width = vim.api.nvim_get_option_value("columns", {})
-  local term_width = math.floor(total_width / 4)
+  local term_width = math.floor(total_width / 3)
 
   -- Open vertical split on the right
   vim.cmd("vsplit")
@@ -36,13 +36,26 @@ function M.toggle_kimi_session()
   vim.api.nvim_win_set_width(kimi_term_win, term_width)
 
   -- Enable text wrapping in the terminal window
+  -- Note: wrap/linebreak work on the display; we also set a large pty width
+  -- in jobstart so the process doesn't hard-wrap lines internally
   vim.api.nvim_set_option_value("wrap", true, { win = kimi_term_win })
   vim.api.nvim_set_option_value("linebreak", true, { win = kimi_term_win })
+  vim.api.nvim_set_option_value("breakindent", true, { win = kimi_term_win })
+  vim.api.nvim_set_option_value("showbreak", "↳ ", { win = kimi_term_win })
 
   -- Start terminal if not already running
   local term_chan = vim.b[kimi_term_buf].terminal_job_id
   if not term_chan then
-    vim.fn.termopen("kimi --yolo -w " .. vim.fn.shellescape(project_root), {
+    -- IMPORTANT: Must be in the terminal window when starting the job
+    -- so it inherits the correct width for wrapping
+    local prev_win = vim.api.nvim_get_current_win()
+    vim.api.nvim_set_current_win(kimi_term_win)
+
+    term_chan = vim.fn.jobstart({ "kimi", "--yolo", "--no-thinking", "-w", project_root }, {
+      term = true,
+      pty = true,
+      width = 9999, -- Large width so process doesn't hard-wrap lines
+      height = vim.o.lines,
       on_exit = function()
         -- Close the window if it's still valid
         if kimi_term_win and vim.api.nvim_win_is_valid(kimi_term_win) then
@@ -56,6 +69,13 @@ function M.toggle_kimi_session()
         kimi_term_win = nil
       end,
     })
+
+    -- Restore previous window position
+    if vim.api.nvim_win_is_valid(prev_win) then
+      vim.api.nvim_set_current_win(prev_win)
+    end
+
+    vim.b[kimi_term_buf].terminal_job_id = term_chan
   end
 
   -- Enter insert mode in terminal
@@ -74,7 +94,7 @@ vim.api.nvim_create_user_command("KimiToggle", function()
     desc = "Move to left window from terminal",
   })
   -- <C-c> to go to normal mode
-  vim.api.nvim_buf_set_keymap(kimi_term_buf, "t", "<C-c>", "<C-\\><C-n>", {
+  vim.api.nvim_buf_set_keymap(kimi_term_buf, "t", "<Esc>", "<C-\\><C-n>", {
     noremap = true,
     silent = true,
     desc = "Exit to normal mode from terminal",
@@ -130,7 +150,7 @@ function M.send_visual_selection()
     -- If still not found, open a new window
     if not kimi_term_win or not vim.api.nvim_win_is_valid(kimi_term_win) then
       local total_width = vim.api.nvim_get_option_value("columns", {})
-      local term_width = math.floor(total_width / 4)
+      local term_width = math.floor(total_width / 3)
       vim.cmd("vsplit")
       kimi_term_win = vim.api.nvim_get_current_win()
       vim.api.nvim_win_set_buf(kimi_term_win, kimi_term_buf)
@@ -138,6 +158,8 @@ function M.send_visual_selection()
       -- Enable text wrapping in the terminal window
       vim.api.nvim_set_option_value("wrap", true, { win = kimi_term_win })
       vim.api.nvim_set_option_value("linebreak", true, { win = kimi_term_win })
+      vim.api.nvim_set_option_value("breakindent", true, { win = kimi_term_win })
+      vim.api.nvim_set_option_value("showbreak", "↳ ", { win = kimi_term_win })
     end
   end
 

@@ -365,6 +365,6 @@ function vnv() {
 function aichat() {
   curr=$PWD
   cd /Users/himujjalupadhyaya/temp/simple_chat
-  opencode --agent aichat
+  kimi --yolo
   cd $curr
 }
