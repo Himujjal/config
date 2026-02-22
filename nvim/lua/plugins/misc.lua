@@ -102,4 +102,14 @@ return {
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
   },
+
+  -- Render markdown in buffer
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {},
+  },
 }

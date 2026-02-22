@@ -88,7 +88,7 @@ local mappings = {
     ["<leader>a"] = { name = "AI Sidekick" },
     ["<leader>aa"] = {
       function()
-        sidekick.toggle()
+        require("sidekick.cli").toggle()
       end,
       desc = "Sidekick Toggle CLI",
     },

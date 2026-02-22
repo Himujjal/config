@@ -179,8 +179,6 @@ function M.send_visual_selection()
 
   -- Focus the kimi terminal window
   vim.api.nvim_set_current_win(kimi_term_win)
-
-  vim.notify("Sent to kimi: " .. ref_string, vim.log.levels.INFO)
 end
 
 -- Global keymap to toggle kimi
