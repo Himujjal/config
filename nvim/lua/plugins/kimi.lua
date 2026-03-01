@@ -117,6 +117,12 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
 
 -- Function to send visual selection to kimi terminal
 function M.send_visual_selection()
+  -- Check if a kimi session is active (buffer exists and is valid)
+  if not kimi_term_buf or not vim.api.nvim_buf_is_valid(kimi_term_buf) then
+    vim.notify("No active Kimi session. Use <leader>kt to open one first.", vim.log.levels.WARN)
+    return
+  end
+
   -- Get visual selection range
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
@@ -131,11 +137,6 @@ function M.send_visual_selection()
 
   -- Construct the reference string: @file L<start>:L<end>
   local ref_string = string.format(" @%s L%d:L%d ", file_name, start_line, end_line)
-
-  -- Ensure kimi terminal is open
-  if not kimi_term_buf or not vim.api.nvim_buf_is_valid(kimi_term_buf) then
-    M.toggle_kimi_session()
-  end
 
   -- Ensure window is valid and visible
   if not kimi_term_win or not vim.api.nvim_win_is_valid(kimi_term_win) then
