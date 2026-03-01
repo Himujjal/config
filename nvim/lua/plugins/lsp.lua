@@ -14,6 +14,11 @@ return {
           filetypes = { "ek" },
         })
       )
+
+      -- Add markdown formatter
+      table.insert(opts.sources, nls.builtins.formatting.prettierd.with({
+        filetypes = { "markdown" },
+      }))
     end,
   },
   {

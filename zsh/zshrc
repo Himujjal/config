@@ -67,6 +67,7 @@ plugins=(
 	zsh-syntax-highlighting
 	zsh-autosuggestions
 	npm
+  kimi-cli
 )
 
 export PATH=$PATH:/opt/homebrew/bin
