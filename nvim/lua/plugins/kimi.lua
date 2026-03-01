@@ -7,7 +7,10 @@ local M = {}
 local kimi_term_buf = nil
 local kimi_term_win = nil
 
-function M.toggle_kimi_session()
+function M.toggle_kimi_session(opts)
+  opts = opts or {}
+  local with_thinking = opts.thinking or false
+
   -- If window exists and is valid, close it
   if kimi_term_win and vim.api.nvim_win_is_valid(kimi_term_win) then
     vim.api.nvim_win_close(kimi_term_win, true)
@@ -51,7 +54,13 @@ function M.toggle_kimi_session()
     local prev_win = vim.api.nvim_get_current_win()
     vim.api.nvim_set_current_win(kimi_term_win)
 
-    term_chan = vim.fn.jobstart({ "kimi", "--yolo", "--no-thinking", "-w", project_root }, {
+    -- Build kimi command args
+    local kimi_args = { "kimi", "--yolo", "-w", project_root }
+    if not with_thinking then
+      table.insert(kimi_args, "--no-thinking")
+    end
+
+    term_chan = vim.fn.jobstart(kimi_args, {
       term = true,
       pty = true,
       width = 9999, -- Large width so process doesn't hard-wrap lines
@@ -82,9 +91,9 @@ function M.toggle_kimi_session()
   vim.cmd("startinsert")
 end
 
--- Create user command
+-- Create user commands
 vim.api.nvim_create_user_command("KimiToggle", function()
-  M.toggle_kimi_session()
+  M.toggle_kimi_session({ thinking = false })
 
   -- Set up terminal-local keymaps
   -- <C-h> to move to the left buffer (window)
@@ -99,7 +108,25 @@ vim.api.nvim_create_user_command("KimiToggle", function()
     silent = true,
     desc = "Exit to normal mode from terminal",
   })
-end, { desc = "Toggle Kimi terminal session" })
+end, { desc = "Toggle Kimi terminal session (no thinking)" })
+
+vim.api.nvim_create_user_command("KimiToggleThinking", function()
+  M.toggle_kimi_session({ thinking = true })
+
+  -- Set up terminal-local keymaps
+  -- <C-h> to move to the left buffer (window)
+  vim.api.nvim_buf_set_keymap(kimi_term_buf, "t", "<C-h>", "<C-\\><C-n><C-w>h", {
+    noremap = true,
+    silent = true,
+    desc = "Move to left window from terminal",
+  })
+  -- <C-c> to go to normal mode
+  vim.api.nvim_buf_set_keymap(kimi_term_buf, "t", "<Esc>", "<C-\\><C-n>", {
+    noremap = true,
+    silent = true,
+    desc = "Exit to normal mode from terminal",
+  })
+end, { desc = "Toggle Kimi terminal session (with thinking)" })
 
 -- Autocommand to enter insert mode when kimi terminal buffer is active
 vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
@@ -119,7 +146,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
 function M.send_visual_selection()
   -- Check if a kimi session is active (buffer exists and is valid)
   if not kimi_term_buf or not vim.api.nvim_buf_is_valid(kimi_term_buf) then
-    vim.notify("No active Kimi session. Use <leader>kt to open one first.", vim.log.levels.WARN)
+    vim.notify("No active Kimi session. Use <leader>ka or <leader>kt to open one first.", vim.log.levels.WARN)
     return
   end
 
@@ -182,8 +209,11 @@ function M.send_visual_selection()
   vim.api.nvim_set_current_win(kimi_term_win)
 end
 
--- Global keymap to toggle kimi
-vim.keymap.set("n", "<leader>kt", ":KimiToggle<CR>", { desc = "Toggle Kimi terminal", silent = true })
+-- Global keymaps to toggle kimi
+-- <leader>ka: kimi without thinking (yolo)
+vim.keymap.set("n", "<leader>ka", ":KimiToggle<CR>", { desc = "Toggle Kimi terminal (no thinking)", silent = true })
+-- <leader>kt: kimi with thinking (yolo)
+vim.keymap.set("n", "<leader>kt", ":KimiToggleThinking<CR>", { desc = "Toggle Kimi terminal (with thinking)", silent = true })
 
 -- Visual mode keymap to send selection to kimi
 vim.keymap.set("v", "<leader>ke", function()
