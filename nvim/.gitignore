@@ -10,3 +10,6 @@ data
 env.lua
 
 .env
+
+# macOS
+.DS_Store
