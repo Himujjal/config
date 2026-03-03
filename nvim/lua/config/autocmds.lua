@@ -7,16 +7,14 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
--- Auto-close terminal buffers when process exits (no "process exited 0" message)
-vim.api.nvim_create_autocmd("TermClose", {
-  callback = function(args)
-    -- Only auto-close if the process exited successfully (no error)
-    -- Check if buffer is still valid
-    if vim.api.nvim_buf_is_valid(args.buf) then
-      vim.api.nvim_buf_delete(args.buf, { force = false })
+-- Open neo-tree on startup (right side)
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- Only open neo-tree if no file was specified on the command line
+    if vim.fn.argc() == 0 then
+      vim.cmd("Neotree show right")
     end
   end,
-  desc = "Auto-close terminal buffer when process exits",
 })
 
 -- Set ek filetype to use TypeScript syntax highlighting but prevent LSP
@@ -46,19 +44,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
-
--- Auto-open neo-tree when starting nvim with a directory
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    local arg = vim.fn.argv(0)
-    if arg and vim.fn.isdirectory(arg) == 1 then
-      -- Defer slightly to ensure neo-tree is loaded
-      vim.schedule(function()
-        vim.cmd("Neotree position=current dir=" .. arg)
-      end)
-    end
-  end,
-  desc = "Open neo-tree when starting with a directory",
-})
-
--- Note: Removed lazygit refresh autocmd for performance

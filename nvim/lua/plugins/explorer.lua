@@ -240,11 +240,7 @@ return {
           leave_dirs_open = true, -- CHANGED: keep dirs open (prevents constant tree restructuring)
         },
         group_empty_dirs = false,
-<<<<<<< HEAD
-        hijack_netrw_behavior = "open_current",
-=======
         hijack_netrw_behavior = "disabled",
->>>>>>> fec4a32 (fix(keymaps): remove duplicate neo-tree keymaps from keymaps.lua)
         use_libuv_file_watcher = true,
         window = {
           mappings = {
@@ -353,8 +349,6 @@ return {
 
   -- Disable nvim-tree if it was enabled
   { "nvim-tree/nvim-tree.lua", enabled = false },
-<<<<<<< HEAD
-=======
   -- Disable LazyVim's default snacks explorer completely
   {
     "folke/snacks.nvim",
@@ -367,5 +361,4 @@ return {
       },
     },
   },
->>>>>>> fec4a32 (fix(keymaps): remove duplicate neo-tree keymaps from keymaps.lua)
 }

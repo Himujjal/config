@@ -104,6 +104,14 @@ local mappings = {
         vim.api.nvim_win_set_height(0, term_height)
         -- Enter insert mode
         vim.cmd("startinsert")
+        -- Close terminal when process exits
+        vim.api.nvim_create_autocmd("TermClose", {
+          buffer = 0,
+          once = true,
+          callback = function()
+            vim.cmd("bdelete!")
+          end,
+        })
       end,
       desc = "Open terminal at the bottom",
     },
