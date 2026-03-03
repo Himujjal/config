@@ -10,10 +10,9 @@ return {
     },
     cmd = "Neotree",
     keys = {
-      { "e", "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
-      { "o", "<cmd>Neotree focus<cr>", desc = "Focus Explorer" },
-      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle file explorer" },
-      { "<leader>E", "<cmd>Neotree reveal<cr>", desc = "Reveal current file in explorer" },
+      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
+      { "<leader>E", "<cmd>Neotree reveal<cr>", desc = "Reveal Current File" },
+      { "<leader>o", "<cmd>Neotree focus<cr>", desc = "Focus Explorer" },
     },
     opts = {
       auto_clean_after_session_restore = true,
@@ -241,7 +240,11 @@ return {
           leave_dirs_open = true, -- CHANGED: keep dirs open (prevents constant tree restructuring)
         },
         group_empty_dirs = false,
+<<<<<<< HEAD
         hijack_netrw_behavior = "open_current",
+=======
+        hijack_netrw_behavior = "disabled",
+>>>>>>> fec4a32 (fix(keymaps): remove duplicate neo-tree keymaps from keymaps.lua)
         use_libuv_file_watcher = true,
         window = {
           mappings = {
@@ -350,4 +353,19 @@ return {
 
   -- Disable nvim-tree if it was enabled
   { "nvim-tree/nvim-tree.lua", enabled = false },
+<<<<<<< HEAD
+=======
+  -- Disable LazyVim's default snacks explorer completely
+  {
+    "folke/snacks.nvim",
+    opts = {
+      explorer = { enabled = false },
+      picker = {
+        sources = {
+          explorer = { enabled = false },
+        },
+      },
+    },
+  },
+>>>>>>> fec4a32 (fix(keymaps): remove duplicate neo-tree keymaps from keymaps.lua)
 }

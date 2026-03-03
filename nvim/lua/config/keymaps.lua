@@ -72,6 +72,7 @@ local mappings = {
     ["\\"] = { "<Cmd>split<CR>", "Horizontal split current buffer" },
 
     ["<leader>L"] = { "<cmd>Lazy<cr>", desc = "Lazy" },
+    -- NOTE: <leader>e and <leader>E are defined in lua/plugins/explorer.lua
 
     -- formatting and code actions
     ["<leader>l"] = { name = "Code Actions" },
