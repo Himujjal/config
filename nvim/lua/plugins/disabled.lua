@@ -1,5 +1,13 @@
--- Disable default LazyVim plugins we don't want
+-- Disable default plugins we don't want
 return {
-  -- Disable neo-tree in favor of oil.nvim
-  { "nvim-neo-tree/neo-tree.nvim", enabled = false },
+  -- Disable nvim-tree in favor of neo-tree
+  { "nvim-tree/nvim-tree.lua", enabled = false },
+
+  -- Disable snacks.nvim explorer (LazyVim's new default explorer)
+  {
+    "folke/snacks.nvim",
+    opts = {
+      explorer = { enabled = false },
+    },
+  },
 }

@@ -62,6 +62,12 @@ local mappings = {
     ["<s-L>"] = { "<c-u>", desc = "Lazy" },
     ["<s-H>"] = { "<c-d>", desc = "Lazy" },
 
+    -- Window navigation
+    ["<C-h>"] = { "<C-w>h", desc = "Go to left window", remap = true },
+    ["<C-j>"] = { "<C-w>j", desc = "Go to lower window", remap = true },
+    ["<C-k>"] = { "<C-w>k", desc = "Go to upper window", remap = true },
+    ["<C-l>"] = { "<C-w>l", desc = "Go to right window", remap = true },
+
     ["|"] = { "<Cmd>vsplit<CR>", "Vsplit current buffer" },
     ["\\"] = { "<Cmd>split<CR>", "Horizontal split current buffer" },
 
@@ -78,10 +84,27 @@ local mappings = {
       desc = "Symbols",
     },
 
-    -- Kimi terminal session toggle
+    -- Kimish terminal session toggle
     ["<leader>k"] = {
-      "<cmd>KimiToggle<CR>",
-      desc = "Toggle Kimi Terminal Session",
+      "<cmd>KimishToggle<CR>",
+      desc = "Toggle Kimish Terminal Session",
+    },
+
+    -- Terminal at the bottom
+    ["<leader>ft"] = {
+      function()
+        -- Open horizontal split at the bottom
+        vim.cmd("split")
+        -- Open terminal in the new window
+        vim.cmd("terminal")
+        -- Calculate height (1/4 of screen) and set it
+        local total_height = vim.api.nvim_get_option_value("lines", {})
+        local term_height = math.floor(total_height / 4)
+        vim.api.nvim_win_set_height(0, term_height)
+        -- Enter insert mode
+        vim.cmd("startinsert")
+      end,
+      desc = "Open terminal at the bottom",
     },
 
     -- Sidekick additions – normal-mode only unless otherwise noted
