@@ -242,12 +242,17 @@ local mappings = {
     ["<C-j>"] = { "<C-\\><C-n><C-w>j", desc = "Go to lower window" },
     ["<C-k>"] = { "<C-\\><C-n><C-w>k", desc = "Go to upper window" },
     -- <C-l> clears screen in kimi terminal, navigates windows in other terminals
+    -- NOTE: Using expr = true with return strings - functions in t-mode need special handling
     ["<C-l>"] = {
       function()
-        -- Check if we're in the kimi terminal (has terminal_job_id buffer var)
-        if vim.b.terminal_job_id and type(vim.b.terminal_job_id) == "number" then
-          -- In kimi terminal: send <C-l> to clear screen
-          return "<C-l>"
+        -- Check if we're in the kimi terminal (has is_kimi_terminal buffer var)
+        if vim.b.is_kimi_terminal then
+          -- In kimi terminal: send <C-l> directly to the terminal job to clear screen
+          local term_chan = vim.b.terminal_job_id
+          if term_chan then
+            vim.api.nvim_chan_send(term_chan, "\x0c") -- ASCII 12 = Ctrl+L
+          end
+          return ""
         else
           -- In other terminals: navigate to right window
           return "<C-\\><C-n><C-w>l"
