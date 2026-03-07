@@ -88,6 +88,7 @@ function M.toggle_kimish_session(opts)
     end
 
     vim.b[kimish_term_buf].terminal_job_id = term_chan
+    vim.b[kimish_term_buf].is_kimi_terminal = true
   end
 
   -- Set up terminal-local keymaps for this buffer BEFORE entering insert mode
@@ -110,7 +111,7 @@ function M.setup_terminal_keymaps()
     silent = true,
     desc = "Move to left window from terminal",
   })
-  -- Note: <C-l> is NOT mapped to allow terminal's clear-screen functionality
+  -- Note: <C-l> handling is in keymaps.lua - clears screen in kimi terminal, navigates in others
   -- <C-j> to move to the window below
   vim.api.nvim_buf_set_keymap(kimish_term_buf, "t", "<C-j>", "<C-\\><C-n><C-w>j", {
     noremap = true,

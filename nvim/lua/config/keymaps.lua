@@ -241,7 +241,21 @@ local mappings = {
     ["<C-h>"] = { "<C-\\><C-n><C-w>h", desc = "Go to left window" },
     ["<C-j>"] = { "<C-\\><C-n><C-w>j", desc = "Go to lower window" },
     ["<C-k>"] = { "<C-\\><C-n><C-w>k", desc = "Go to upper window" },
-    ["<C-l>"] = { "<C-\\><C-n><C-w>l", desc = "Go to right window" },
+    -- <C-l> clears screen in kimi terminal, navigates windows in other terminals
+    ["<C-l>"] = {
+      function()
+        -- Check if we're in the kimi terminal (has terminal_job_id buffer var)
+        if vim.b.terminal_job_id and type(vim.b.terminal_job_id) == "number" then
+          -- In kimi terminal: send <C-l> to clear screen
+          return "<C-l>"
+        else
+          -- In other terminals: navigate to right window
+          return "<C-\\><C-n><C-w>l"
+        end
+      end,
+      desc = "Clear screen (kimi) or go to right window",
+      expr = true,
+    },
   },
 
   -- insert-mode keybindings
@@ -288,6 +302,28 @@ end
 -- vim.keymap.set({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions("New Chat"))
 -- vim.keymap.set({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions("Toggle Chat"))
 -- vim.keymap.set({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions("Chat Finder"))
+
+-- Set up <S-Enter> for multi-line input in regular (non-kimi) terminals
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+  pattern = "*",
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    -- Give it a moment for terminal to initialize
+    vim.defer_fn(function()
+      -- If buffer is still valid and NOT the kimi terminal, set up the keymap
+      if vim.api.nvim_buf_is_valid(buf) and not vim.b[buf].is_kimi_terminal then
+        -- Regular terminal - set up <S-Enter> for new line
+        vim.keymap.set("t", "<S-CR>", function()
+          local chan = vim.b.terminal_job_id
+          if chan then
+            vim.api.nvim_chan_send(chan, "\n")
+          end
+        end, { buffer = buf, noremap = true, silent = true, desc = "Shift+Enter for new line" })
+      end
+    end, 50)
+  end,
+  desc = "Set up <S-Enter> for regular terminals",
+})
 --
 -- vim.keymap.set("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions("Visual Chat New"))
 -- vim.keymap.set("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions("Visual Chat Paste"))
