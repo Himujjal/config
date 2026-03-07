@@ -236,6 +236,14 @@ local mappings = {
     ["<C-g>l"] = { "<cmd>GpSelectAgent<cr>", desc = "GPT prompt Select Agent" },
   },
 
+  -- terminal-mode keybindings (for navigating out of terminal panes)
+  t = {
+    ["<C-h>"] = { "<C-\\><C-n><C-w>h", desc = "Go to left window" },
+    ["<C-j>"] = { "<C-\\><C-n><C-w>j", desc = "Go to lower window" },
+    ["<C-k>"] = { "<C-\\><C-n><C-w>k", desc = "Go to upper window" },
+    ["<C-l>"] = { "<C-\\><C-n><C-w>l", desc = "Go to right window" },
+  },
+
   -- insert-mode keybindings
   i = {
     ["<C-l>"] = {

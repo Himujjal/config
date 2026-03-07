@@ -30,13 +30,15 @@ function M.toggle_kimish_session(opts)
 
   -- Calculate width (1/3 of screen)
   local total_width = vim.api.nvim_get_option_value("columns", {})
-  local term_width = math.floor(total_width / 3)
+  local term_width = math.max(math.floor(total_width / 3), 40)
 
-  -- Open vertical split on the right
-  vim.cmd("vsplit")
+  -- Open vertical split on the far right (botright ensures consistent position)
+  vim.cmd("botright " .. term_width .. "vnew")
   kimish_term_win = vim.api.nvim_get_current_win()
   vim.api.nvim_win_set_buf(kimish_term_win, kimish_term_buf)
-  vim.api.nvim_win_set_width(kimish_term_win, term_width)
+  
+  -- Fix the width so it doesn't shift when entering/exiting
+  vim.api.nvim_set_option_value("winfixwidth", true, { win = kimish_term_win })
 
   -- Enable text wrapping in the terminal window
   -- Note: wrap/linebreak work on the display; we also set a large pty width
@@ -88,11 +90,12 @@ function M.toggle_kimish_session(opts)
     vim.b[kimish_term_buf].terminal_job_id = term_chan
   end
 
+  -- Set up terminal-local keymaps for this buffer BEFORE entering insert mode
+  -- This ensures keymaps are active when user starts typing
+  M.setup_terminal_keymaps()
+
   -- Enter insert mode in terminal
   vim.cmd("startinsert")
-
-  -- Set up terminal-local keymaps for this buffer
-  M.setup_terminal_keymaps()
 end
 
 -- Set up terminal-local keymaps for the kimish buffer
@@ -101,21 +104,21 @@ function M.setup_terminal_keymaps()
     return
   end
 
-  -- <C-h> to move to the left window (using <Cmd> to avoid mode switching issues)
-  vim.api.nvim_buf_set_keymap(kimish_term_buf, "t", "<C-h>", "<Cmd>wincmd h<CR>", {
+  -- <C-h> to move to the left window (exit terminal mode first, then navigate)
+  vim.api.nvim_buf_set_keymap(kimish_term_buf, "t", "<C-h>", "<C-\\><C-n><C-w>h", {
     noremap = true,
     silent = true,
     desc = "Move to left window from terminal",
   })
   -- Note: <C-l> is NOT mapped to allow terminal's clear-screen functionality
   -- <C-j> to move to the window below
-  vim.api.nvim_buf_set_keymap(kimish_term_buf, "t", "<C-j>", "<Cmd>wincmd j<CR>", {
+  vim.api.nvim_buf_set_keymap(kimish_term_buf, "t", "<C-j>", "<C-\\><C-n><C-w>j", {
     noremap = true,
     silent = true,
     desc = "Move to window below from terminal",
   })
   -- <C-k> to move to the window above
-  vim.api.nvim_buf_set_keymap(kimish_term_buf, "t", "<C-k>", "<Cmd>wincmd k<CR>", {
+  vim.api.nvim_buf_set_keymap(kimish_term_buf, "t", "<C-k>", "<C-\\><C-n><C-w>k", {
     noremap = true,
     silent = true,
     desc = "Move to window above from terminal",
@@ -126,33 +129,55 @@ function M.setup_terminal_keymaps()
     silent = true,
     desc = "Exit to normal mode from terminal",
   })
-  -- Shift+Enter for new line in kimi terminal
-  -- Use the buffer-local terminal_job_id to send escape sequences
-  -- CSI u format: ESC [ 13 ; 2 u  (13=Enter key, 2=Shift modifier)
-  -- Note: Many terminal emulators don't distinguish Shift+Enter from Enter.
-  -- If <S-CR> doesn't work, try <C-CR> (Ctrl+Enter) as a fallback.
+  -- Multi-line input keymaps for kimi terminal
+  -- Note: <S-Enter> (Shift+Enter) is NOT distinguishable from Enter in most terminals.
+  -- The terminal emulator sends the same bytes for both, so Neovim cannot differentiate them.
+  -- Use Alt+Enter (<M-CR>) or <C-j> instead for reliable multi-line input.
   local function send_newline_no_submit()
-    local chan = vim.b[kimish_term_buf].terminal_job_id
-    if chan then
-      -- Send CSI-u sequence for Shift+Enter
-      vim.fn.chansend(chan, "\027[13;2u")
+    -- Send a literal newline character to the terminal job
+    -- Use chan_send to directly inject input to the terminal process
+    local term_chan = vim.b[kimish_term_buf].terminal_job_id
+    if term_chan then
+      vim.api.nvim_chan_send(term_chan, "\n")
     end
   end
   
-  -- Use vim.keymap.set with buffer option
+  -- Alt+Enter (Meta+Enter) - works in most terminals
+  vim.keymap.set("t", "<M-CR>", send_newline_no_submit, {
+    buffer = kimish_term_buf,
+    noremap = true,
+    silent = true,
+    desc = "Alt+Enter for new line in kimi",
+  })
+  
+  -- Also map <M-Enter> variant
+  vim.keymap.set("t", "<M-Enter>", send_newline_no_submit, {
+    buffer = kimish_term_buf,
+    noremap = true,
+    silent = true,
+    desc = "Alt+Enter for new line in kimi",
+  })
+  
+  -- <C-j> is the most reliable - sends newline directly (same as Ctrl+J)
+  vim.keymap.set("t", "<C-j>", function()
+    local term_chan = vim.b[kimish_term_buf].terminal_job_id
+    if term_chan then
+      vim.api.nvim_chan_send(term_chan, "\n")
+    end
+  end, {
+    buffer = kimish_term_buf,
+    noremap = true,
+    silent = true,
+    desc = "Ctrl+J for new line in kimi",
+  })
+  
+  -- Note: These may work in some terminal emulators that are configured to send different sequences
+  -- for Shift+Enter vs regular Enter (e.g., iTerm2 can be configured this way)
   vim.keymap.set("t", "<S-CR>", send_newline_no_submit, {
     buffer = kimish_term_buf,
     noremap = true,
     silent = true,
-    desc = "Shift+Enter for new line in kimi",
-  })
-  
-  -- Fallback: Ctrl+Enter often works when Shift+Enter doesn't
-  vim.keymap.set("t", "<C-CR>", send_newline_no_submit, {
-    buffer = kimish_term_buf,
-    noremap = true,
-    silent = true,
-    desc = "Ctrl+Enter for new line in kimi",
+    desc = "Shift+Enter for new line in kimi (terminal dependent)",
   })
 end
 
