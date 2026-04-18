@@ -214,10 +214,11 @@ alias cls=clear
 # random
 alias lsl='ls -alh --color=always'
 alias cls=clear
-mdcd() {
+function mdcd() {
     mkdir $1 && cd $1
 }
-alias md="mkdir"
+# Override x-cmd's md function with mkdir
+alias md=mkdir
 alias rmrf="rm -irf"
 
 alias lg="lazygit"
@@ -369,3 +370,83 @@ function aichat() {
   kimi --yolo
   cd $curr
 }
+
+# ============================================
+# AI App Forge - Create new app function
+# ============================================
+# Usage: forge-new <app-name> [--template=<template>] [--platforms=<platforms>]
+# Examples:
+#   forge-new my-todo-app
+#   forge-new my-chat-app --template=chat
+#   forge-new my-custom-app --template=blank --platforms=web,mobile
+function forge-new() {
+    local repo_path="/Users/himujjalupadhyaya/mycode/clones/template"
+    local output_dir="$PWD"
+    
+    # Check if repo exists
+    if [[ ! -d "$repo_path" ]]; then
+        echo "❌ Error: AI App Forge repo not found at $repo_path"
+        return 1
+    fi
+    
+    # Check if at least app name is provided
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: forge-new <app-name> [--template=<template>] [--platforms=<platforms>]"
+        echo ""
+        echo "Available templates:"
+        ls -1 "$repo_path/agents/templates" 2>/dev/null || echo "  (templates directory not found)"
+        return 1
+    fi
+    
+    # Run the create-app script - it will use current directory
+    bun run "$repo_path/agents/scripts/create-app.js" "$@"
+    
+    return $?
+}
+
+alias yz=yazi
+
+# Alias for convenience
+alias forge="forge-new"
+
+# ============================================
+# AI App Forge - Agent Wrapper
+# ============================================
+# This function is designed for AI agents to create apps easily.
+# It provides a clean interface with helpful output.
+#
+# Usage: 
+#   forge-agent create <app-name> [--template=<template>]
+#   forge-agent list-templates
+#   forge-agent list-apps
+#   forge-agent scaffold <type> <name>
+#
+# Examples:
+#   forge-agent create my-todo-app --template=todo
+#   forge-agent create my-chat-app --template=chat --platforms=web,mobile
+
+function forge-agent() {
+    local repo_path="/Users/himujjalupadhyaya/mycode/clones/template"
+    local output_dir="$PWD"
+    
+    # Check if repo exists
+    if [[ ! -d "$repo_path" ]]; then
+        echo "❌ Error: AI App Forge repo not found at $repo_path"
+        return 1
+    fi
+    
+    # If no arguments, show help
+    if [[ $# -eq 0 ]]; then
+        bun run "$repo_path/agents/scripts/forge-agent.js" help
+        return 0
+    fi
+    
+    # Run the forge-agent script - it will use current directory
+    bun run "$repo_path/agents/scripts/forge-agent.js" "$@"
+    
+    return $?
+}
+
+# Short alias for quick access
+alias fagent='forge-agent'
+alias fa='forge-agent'

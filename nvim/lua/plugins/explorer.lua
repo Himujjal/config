@@ -8,12 +8,14 @@ return {
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
-    cmd = "Neotree",
+    lazy = false, -- Load immediately, don't wait for cmd
+    priority = 1000, -- High priority to load early
     keys = {
-      { "<S-e>", "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
-      { "<leader>e", "<cmd>Neotree reveal<cr>", desc = "Reveal Current File" },
+      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
+      { "<leader>E", "<cmd>Neotree reveal<cr>", desc = "Reveal Current File" },
       { "<leader>o", "<cmd>Neotree focus<cr>", desc = "Focus Explorer" },
     },
+    -- Keymaps defined here to ensure proper loading order with lazy.nvim
     opts = {
       auto_clean_after_session_restore = true,
       close_if_last_window = true,
@@ -311,6 +313,13 @@ return {
       },
       event_handlers = {
         {
+          event = "file_opened",
+          handler = function(file_path)
+            -- Close neo-tree when opening a file so the file replaces the explorer
+            vim.cmd("Neotree close")
+          end,
+        },
+        {
           event = "neo_tree_buffer_enter",
           handler = function()
             vim.opt_local.relativenumber = false
@@ -342,4 +351,16 @@ return {
 
   -- Disable nvim-tree if it was enabled
   { "nvim-tree/nvim-tree.lua", enabled = false },
+  -- Disable LazyVim's default snacks explorer completely
+  {
+    "folke/snacks.nvim",
+    opts = {
+      explorer = { enabled = false },
+      picker = {
+        sources = {
+          explorer = { enabled = false },
+        },
+      },
+    },
+  },
 }

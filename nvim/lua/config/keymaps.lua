@@ -72,8 +72,12 @@ local mappings = {
     ["\\"] = { "<Cmd>split<CR>", "Horizontal split current buffer" },
 
     ["<leader>L"] = { "<cmd>Lazy<cr>", desc = "Lazy" },
-    -- NOTE: <leader>e and <leader>E are defined in lua/plugins/explorer.lua
+    -- <leader>e, <leader>E, and <leader>o for neo-tree are defined in lua/plugins/explorer.lua
 
+    ["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
+    ["<leader>E"] = { "<cmd>Neotree reveal<cr>", desc = "Reveal Current File" },
+
+    ["<leader>o"] = { "<cmd>Neotree focus<cr>", desc = "Focus Explorer" },
     -- formatting and code actions
     ["<leader>l"] = { name = "Code Actions" },
     ["<leader>lf"] = { vim.lsp.buf.format, desc = "Format" },
@@ -274,8 +278,8 @@ local mappings = {
   },
 }
 
--- Delete previous mappings
-vim.keymap.del("n", "<leader>l")
+-- Delete previous mappings (use pcall to avoid errors if mapping doesn't exist)
+pcall(vim.keymap.del, "n", "<leader>l")
 
 for mode, maps in pairs(mappings) do
   for lhs, def in pairs(maps) do
