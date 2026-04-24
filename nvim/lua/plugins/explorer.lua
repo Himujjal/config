@@ -313,13 +313,6 @@ return {
       },
       event_handlers = {
         {
-          event = "file_opened",
-          handler = function(file_path)
-            -- Close neo-tree when opening a file so the file replaces the explorer
-            vim.cmd("Neotree close")
-          end,
-        },
-        {
           event = "neo_tree_buffer_enter",
           handler = function()
             vim.opt_local.relativenumber = false

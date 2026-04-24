@@ -51,6 +51,11 @@ return {
         function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
         desc = "Find Plugin File",
       },
+      {
+        "<leader>fw",
+        function() require("telescope.builtin").live_grep() end,
+        desc = "Find Word in Files",
+      },
     },
     -- change some options
     opts = {

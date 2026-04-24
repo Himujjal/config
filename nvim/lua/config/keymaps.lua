@@ -58,6 +58,12 @@ local mappings = {
     ["<Leader>bD"] = { buffer_close_picker, desc = "Pick to close" },
     ["<C-a>"] = { ":%y+<cr><cr>", desc = "Copy file content", silent = true },
     ["<leader>mp"] = { "<cmd>PeekOpen<cr>", desc = "Open markdown preview" },
+    ["<leader>fw"] = {
+      function()
+        require("telescope.builtin").live_grep()
+      end,
+      desc = "Live grep",
+    },
     ["<C-c>"] = { "<cmd>bdelete<cr>", desc = "Close the buffer" },
     ["<s-L>"] = { "<c-u>", desc = "Lazy" },
     ["<s-H>"] = { "<c-d>", desc = "Lazy" },

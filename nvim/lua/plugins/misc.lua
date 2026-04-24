@@ -1,5 +1,11 @@
 return {
   {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+  {
     "epwalsh/obsidian.nvim",
     version = "*",
     lazy = true,
@@ -50,13 +56,6 @@ return {
       })
     end,
   },
-  ---@type LazySpec
-  -- DISABLED: yazi.nvim - was causing confusion with multiple explorers
-  -- {
-  --   "mikavilpas/yazi.nvim",
-  --   enabled = false,
-  -- },
-
   -- Markdown preview
   {
     "toppair/peek.nvim",
@@ -67,15 +66,5 @@ return {
       vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
-  },
-
-  -- Render markdown in buffer
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    opts = {},
   },
 }
