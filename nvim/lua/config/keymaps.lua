@@ -102,6 +102,8 @@ local mappings = {
     },
 
     -- Terminal at the bottom
+    ["<leader>yz"] = { "<cmd>Yazi<cr>", desc = "Toggle Yazi file manager" },
+
     ["<leader>ft"] = {
       function()
         -- Open horizontal split at the bottom

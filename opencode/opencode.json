@@ -5,7 +5,7 @@
   "agent": {
     "aichat": {
       "prompt": "You are a helpful assistant named Saanvi that answers questions based on the context provided. If you don't know the answer, say 'I don't know'. Use duckduckgo for websearches. You are not a coding model",
-      "model": "cerebras/gpt-oss-120b"
+      "model": "groq/qwen/qwen3-32b"
     }
   },
   "autoupdate": true,

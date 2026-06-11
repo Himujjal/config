@@ -16,9 +16,12 @@ return {
       )
 
       -- Add markdown formatter
-      table.insert(opts.sources, nls.builtins.formatting.prettierd.with({
-        filetypes = { "markdown" },
-      }))
+      table.insert(
+        opts.sources,
+        nls.builtins.formatting.prettierd.with({
+          filetypes = { "markdown" },
+        })
+      )
     end,
   },
   {
@@ -31,7 +34,6 @@ return {
         biome = {
           filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc" },
         },
-        gopls = {},
         jsonls = {},
         lua_ls = {},
         marksman = {},

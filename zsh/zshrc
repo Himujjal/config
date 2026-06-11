@@ -64,10 +64,7 @@ ZSH_THEME="muse"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
-	zsh-syntax-highlighting
-	zsh-autosuggestions
 	npm
-  kimi-cli
 )
 
 export PATH=$PATH:/opt/homebrew/bin
@@ -309,11 +306,6 @@ function init_zvm() {
     export ZVM_INSTALL=$HOME/.zvm
 }
 
-# Wasmer
-export WASMER_DIR="/Users/himujjalupadhyaya/.wasmer"
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-. "$HOME/.cargo/env"
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -334,8 +326,10 @@ function confirm() {
 autoload bashcompinit
 
 # ---- activate mise -----
-# MISE=$(which mise)
-# eval "$($MISE activate zsh)"
+export MISE_DIR="$HOME/.local/share/mise"
+if [[ -d "$MISE_DIR/shims" ]]; then
+  export PATH="$MISE_DIR/shims:$PATH"
+fi
 if command -v mise &>/dev/null; then
     eval "$(mise activate zsh)"
 fi
@@ -365,10 +359,7 @@ function vnv() {
 } 
 
 function aichat() {
-  curr=$PWD
-  cd /Users/himujjalupadhyaya/temp/simple_chat
-  kimi --yolo
-  cd $curr
+  opencode --agent aichat "$@"
 }
 
 # ============================================
@@ -445,6 +436,10 @@ function forge-agent() {
     bun run "$repo_path/agents/scripts/forge-agent.js" "$@"
     
     return $?
+}
+
+function dln() {
+  bun $HOME/Documents/obsidian-personal/dln.ts
 }
 
 # Short alias for quick access
