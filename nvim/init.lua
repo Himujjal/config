@@ -6,3 +6,4 @@ require("config.lazy")
 require("config.updater").setup()
 
 require("neovide")
+require("yazi")

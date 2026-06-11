@@ -101,9 +101,12 @@ local mappings = {
       desc = "Toggle Kimish Terminal Session",
     },
 
-    -- Terminal at the bottom
-    ["<leader>yz"] = { "<cmd>Yazi<cr>", desc = "Toggle Yazi file manager" },
+    ["<leader>yz"] = {
+      "<cmd>Yazi<CR>",
+      desc = "Opens the yazi file explorer",
+    },
 
+    -- Terminal at the bottom
     ["<leader>ft"] = {
       function()
         -- Open horizontal split at the bottom

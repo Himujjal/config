@@ -1,6 +1,3 @@
--- Yazi file manager in a floating terminal window
--- Toggle with <leader>yz
-
 local M = {}
 
 local yazi_buf = nil
@@ -33,12 +30,18 @@ function M.toggle_yazi()
     border = "rounded",
   })
 
-  vim.fn.termopen("yazi", { cwd = vim.fn.expand("%:p:h") or vim.fn.getcwd() })
+  vim.fn.termopen("yazi", {
+    cwd = vim.fn.expand("%:p:h") or vim.fn.getcwd(),
+    on_exit = function()
+      if yazi_win and vim.api.nvim_win_is_valid(yazi_win) then
+        vim.api.nvim_win_close(yazi_win, true)
+        yazi_win = nil
+      end
+    end,
+  })
   vim.cmd("startinsert")
 end
 
-vim.api.nvim_create_user_command("yazi", M.toggle_yazi, { desc = "Toggle Yazi file manager" })
-
-vim.keymap.set("n", "<leader>yz", "<cmd>Yazi<CR>", { desc = "Toggle Yazi file manager", silent = true })
+vim.api.nvim_create_user_command("Yazi", M.toggle_yazi, { desc = "Toggle Yazi file manager" })
 
 return M
