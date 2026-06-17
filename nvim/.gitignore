@@ -8,7 +8,6 @@ foo.*
 data
 
 env.lua
-
 .env
 
 # macOS
