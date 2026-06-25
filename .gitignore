@@ -1,2 +1,4 @@
 gh/hosts.yml
 .env.sh
+configstore/
+sqlit/

@@ -17,6 +17,22 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
+-- Map .smd files to markdown filetype
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.smd",
+  callback = function()
+    vim.bo.filetype = "markdown"
+  end,
+})
+
+-- Map .shtml files to html filetype
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.shtml",
+  callback = function()
+    vim.bo.filetype = "html"
+  end,
+})
+
 -- Set ek filetype to use TypeScript syntax highlighting but prevent LSP
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.ek",
