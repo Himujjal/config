@@ -1,0 +1,40 @@
+{
+  "version": 3,
+  "workspaces": [
+    {
+      "id": "w7",
+      "custom_name": null,
+      "identity_cwd": "/Users/himujjalupadhyaya",
+      "public_pane_numbers": {
+        "7": 1
+      },
+      "next_public_pane_number": 2,
+      "public_tab_numbers": [
+        1
+      ],
+      "next_public_tab_number": 2,
+      "tabs": [
+        {
+          "custom_name": null,
+          "layout": {
+            "Pane": 7
+          },
+          "panes": {
+            "7": {
+              "cwd": "/Users/himujjalupadhyaya"
+            }
+          },
+          "zoomed": false,
+          "focused": 7,
+          "root_pane": 7
+        }
+      ],
+      "active_tab": 0
+    }
+  ],
+  "active": 0,
+  "selected": 0,
+  "sidebar_width": 26,
+  "sidebar_section_split": 0.5,
+  "collapsed_space_keys": []
+}

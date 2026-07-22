@@ -65,6 +65,7 @@ ZSH_THEME="muse"
 plugins=(
 	git
 	npm
+	zsh-syntax-highlighting
 )
 
 export PATH=$PATH:/opt/homebrew/bin
@@ -142,7 +143,7 @@ function confraycast() {
 
 function confwebblocker() {
   curr=$PWD
-  sudo nvim /etc/hosts
+  sudo vim /etc/hosts
   cd $curr
   sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 }
