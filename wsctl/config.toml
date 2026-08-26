@@ -1,0 +1,29 @@
+# wsctl configuration
+#
+# Single deployment settings (no profiles).
+# Environment variables still override any value in this file:
+#   WSCTL_GRPC_SERVER_URL, WSCTL_KEYCLOAK_BASE, WSCTL_KEYCLOAK_REALM,
+#   WSCTL_CLIENT_ID, WSCTL_REDIRECT_URI, WSCTL_CALLBACK_PORT
+
+#grpc_server_url = "https://api.stg.platform.internal.westack-it.de"
+#keycloak_base = "https://auth-stg.westack-it.eu/"
+#keycloak_realm = "westack-staging"
+#keycloak_client_id = "westack-staging"
+#redirect_uri = "http://localhost:47865/callback"
+#callback_port = 47865
+
+#grpc_server_url = "https://api.lernlink.platform.internal.westack-it.eu"
+#keycloak_base = "https://auth.westack-it.eu/"
+#keycloak_realm = "lernlink"
+#keycloak_client_id = "westack-platform"
+#redirect_uri = "http://localhost:47865/callback"
+#callback_port = 47865
+
+
+
+grpc_server_url = "http://127.0.0.1:50051"
+keycloak_base = "https://auth-stg.westack-it.eu/"
+keycloak_realm = "westack-staging"
+keycloak_client_id = "westack-staging"
+redirect_uri = "http://localhost:47865/callback"
+callback_port = 47865

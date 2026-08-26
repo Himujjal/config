@@ -220,22 +220,8 @@ return {
             "*.lock",
           },
           always_show = {},
-          never_show = {
-            ".git",
-          },
-          never_show_by_pattern = {
-            ".venv",
-            "venv",
-            "__pycache__",
-            ".pytest_cache",
-            "*.egg-info",
-            "dist",
-            "build",
-            "target", -- Rust
-            ".gradle",
-            ".idea",
-            ".vscode",
-          },
+          never_show = {},
+          never_show_by_pattern = {},
         },
         follow_current_file = {
           enabled = true,

@@ -141,12 +141,10 @@ function confraycast() {
 	cd $curr
 }
 
-function confwebblocker() {
-  curr=$PWD
-  sudo vim /etc/hosts
-  cd $curr
-  sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+function cdgati() {
+  cd ~/projects/ghost-n-steel/gati/gati-app
 }
+
 
 # alias confnvim="nvim ~/.config/nvim"
 function confnvim() {

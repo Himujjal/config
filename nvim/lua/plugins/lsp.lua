@@ -5,15 +5,6 @@ return {
     opts = function(_, opts)
       local nls = require("null-ls")
       opts.sources = opts.sources or {}
-      table.insert(opts.sources, nls.builtins.formatting.biome)
-
-      -- Add custom biome formatter for ek files
-      table.insert(
-        opts.sources,
-        nls.builtins.formatting.biome.with({
-          filetypes = { "ek" },
-        })
-      )
 
       -- Add markdown formatter
       table.insert(
@@ -79,24 +70,13 @@ return {
       ---@type lspconfig.options
       servers = {
         -- pyright will be automatically installed with mason and loaded with lspconfig
-        biome = {
-          filetypes = {
-            "javascript",
-            "javascriptreact",
-            "typescript",
-            "typescriptreact",
-            "json",
-            "jsonc",
-            "typescript",
-            "typescriptreact",
-          },
-        },
         jsonls = {},
         lua_ls = {},
         marksman = {},
         oxlint = {},
         pyright = {},
         shfmt = {},
+        oxfmt = {},
         stylua = {},
         tailwindcss = {
           filetypes = {
@@ -110,9 +90,29 @@ return {
             "astro",
           },
         },
-        vtsls = {},
+        tsgo = {
+          settings = {
+            typescript = {
+              inlayHints = {
+                parameterNames = { enabled = true },
+                parameterTypes = { enabled = false },
+                variableTypes = { enabled = false },
+                propertyDeclarationTypes = { enabled = false },
+                functionLikeReturnTypes = { enabled = false },
+                enumMemberValues = { enabled = true },
+              },
+            },
+          },
+        },
         zls = {},
         html_lsp = {},
+        astro = {
+          init_options = {
+            typescript = {
+              tsdk = "/Users/himujjalupadhyaya/.local/share/nvim/mason/packages/astro-language-server/node_modules/typescript/lib",
+            },
+          },
+        },
       },
     },
   },

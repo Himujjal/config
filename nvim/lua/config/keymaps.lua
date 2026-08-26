@@ -106,31 +106,6 @@ local mappings = {
       desc = "Opens the yazi file explorer",
     },
 
-    -- Terminal at the bottom
-    ["<leader>ft"] = {
-      function()
-        -- Open horizontal split at the bottom
-        vim.cmd("split")
-        -- Open terminal in the new window
-        vim.cmd("terminal")
-        -- Calculate height (1/4 of screen) and set it
-        local total_height = vim.api.nvim_get_option_value("lines", {})
-        local term_height = math.floor(total_height / 4)
-        vim.api.nvim_win_set_height(0, term_height)
-        -- Enter insert mode
-        vim.cmd("startinsert")
-        -- Close terminal when process exits
-        vim.api.nvim_create_autocmd("TermClose", {
-          buffer = 0,
-          once = true,
-          callback = function()
-            vim.cmd("bdelete!")
-          end,
-        })
-      end,
-      desc = "Open terminal at the bottom",
-    },
-
     -- Sidekick additions – normal-mode only unless otherwise noted
     ["<leader>a"] = { name = "AI Sidekick" },
     ["<leader>aa"] = {
@@ -251,33 +226,6 @@ local mappings = {
     ["<C-g>l"] = { "<cmd>GpSelectAgent<cr>", desc = "GPT prompt Select Agent" },
   },
 
-  -- terminal-mode keybindings (for navigating out of terminal panes)
-  t = {
-    ["<C-h>"] = { "<C-\\><C-n><C-w>h", desc = "Go to left window" },
-    ["<C-j>"] = { "<C-\\><C-n><C-w>j", desc = "Go to lower window" },
-    ["<C-k>"] = { "<C-\\><C-n><C-w>k", desc = "Go to upper window" },
-    -- <C-l> clears screen in kimi terminal, navigates windows in other terminals
-    -- NOTE: Using expr = true with return strings - functions in t-mode need special handling
-    ["<C-l>"] = {
-      function()
-        -- Check if we're in the kimi terminal (has is_kimi_terminal buffer var)
-        if vim.b.is_kimi_terminal then
-          -- In kimi terminal: send <C-l> directly to the terminal job to clear screen
-          local term_chan = vim.b.terminal_job_id
-          if term_chan then
-            vim.api.nvim_chan_send(term_chan, "\x0c") -- ASCII 12 = Ctrl+L
-          end
-          return ""
-        else
-          -- In other terminals: navigate to right window
-          return "<C-\\><C-n><C-w>l"
-        end
-      end,
-      desc = "Clear screen (kimi) or go to right window",
-      expr = true,
-    },
-  },
-
   -- insert-mode keybindings
   i = {
     ["<C-l>"] = {
@@ -323,28 +271,6 @@ end
 -- vim.keymap.set({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions("Toggle Chat"))
 -- vim.keymap.set({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions("Chat Finder"))
 
--- Set up <S-Enter> for multi-line input in regular (non-kimi) terminals
-vim.api.nvim_create_autocmd({ "TermOpen" }, {
-  pattern = "*",
-  callback = function()
-    local buf = vim.api.nvim_get_current_buf()
-    -- Give it a moment for terminal to initialize
-    vim.defer_fn(function()
-      -- If buffer is still valid and NOT the kimi terminal, set up the keymap
-      if vim.api.nvim_buf_is_valid(buf) and not vim.b[buf].is_kimi_terminal then
-        -- Regular terminal - set up <S-Enter> for new line
-        vim.keymap.set("t", "<S-CR>", function()
-          local chan = vim.b.terminal_job_id
-          if chan then
-            vim.api.nvim_chan_send(chan, "\n")
-          end
-        end, { buffer = buf, noremap = true, silent = true, desc = "Shift+Enter for new line" })
-      end
-    end, 50)
-  end,
-  desc = "Set up <S-Enter> for regular terminals",
-})
---
 -- vim.keymap.set("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions("Visual Chat New"))
 -- vim.keymap.set("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions("Visual Chat Paste"))
 -- vim.keymap.set("v", "<C-g>t", ":<C-u>'<,'>GpChatToggle<cr>", keymapOptions("Visual Toggle Chat"))

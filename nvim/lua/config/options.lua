@@ -9,3 +9,6 @@ vim.g.maplocalleader = " "
 -- Disable netrw (vim's built-in file explorer) in favor of neo-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+-- Disable format on save globally (LazyVim/conform autoformat switch)
+vim.g.autoformat = false

@@ -5,10 +5,23 @@
       "options": {
         "baseURL": "https://api.cerebras.ai/v1/"
       }
+    },
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "baseURL": "http://localhost:1234/v1"
+      },
+      "models": {
+        "qwen/qwen3.8-27b": {
+          "name": "qwen3.8-27b"
+        }
+      }
     }
   },
   "plugin": [
-    "oh-my-opencode-slim"
+    "oh-my-opencode-slim@2.2.10",
+    "@mohak34/opencode-notifier@latest"
   ],
   "agent": {
     "aichat": {
@@ -28,7 +41,7 @@
     }
   },
   "tools": {
-    "webfetch": true,
+    "webfetch": true
   },
   "mcp": {}
 }

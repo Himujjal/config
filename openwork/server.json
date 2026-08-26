@@ -1,0 +1,14 @@
+{
+  "workspaces": [
+    {
+      "id": "ws_52ba93770833",
+      "path": "/Users/himujjalupadhyaya/Documents/openwork",
+      "name": "openwork",
+      "preset": "starter",
+      "workspaceType": "local"
+    }
+  ],
+  "authorizedRoots": [
+    "/Users/himujjalupadhyaya/Documents/openwork"
+  ]
+}
