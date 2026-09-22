@@ -1,9 +1,35 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "provider": {
+    "westack-ai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "WeStack AI",
+      "options": {
+        "baseURL": "http://192.168.1.63:20128/v1",
+        "apiKey": "{file:./.secrets/westack_router}",
+        "modelsDiscovery": {
+          "enabled": true,
+          "smartModelName": true,
+          "modelInfoFormat": "omniroute",
+          "models": {
+            "includeBy": [
+              {
+                "field": "owned_by",
+                "equals": "combo"
+              }
+            ]
+          }
+        }
+      }
+    },
     "cerebras": {
       "options": {
         "baseURL": "https://api.cerebras.ai/v1/"
+      },
+      "models": {
+        "qwen-3.8-27b": {
+          "name": "Qwen 3.8 27B (cerebras)"
+        }
       }
     },
     "lmstudio": {
@@ -17,16 +43,57 @@
           "name": "qwen3.8-27b"
         }
       }
+    },
+    "openai": {
+      "options": {
+        "baseURL": "http://192.168.1.63:8317/v1",
+        "apiKey": "{file:./.secrets/westack_router}",
+      },
+      "models": {
+        "gpt-6-astra": {
+          "name": "GPT 6 Astra"
+        },
+        "gpt-5.6-sol": {
+          "name": "GPT 5.6 Sol"
+        }
+      },
+      "whitelist": [
+        "gpt-6-astra",
+        "gpt-5.6-sol"
+      ]
+    },
+    "anthropic": {
+      "options": {
+        "baseURL": "http://192.168.1.63:8317/v1",
+        "apiKey": "{file:./.secrets/westack_router}",
+      },
+      "models": {
+        "claude-fable-5-1": {
+          "name": "Claude Fable 5.1"
+        },
+        "claude-sonnet-5": {
+          "name": "Claude Sonnet 5"
+        },
+        "claude-opus-5": {
+          "name": "Claude Opus 5"
+        }
+      },
+      "whitelist": [
+        "claude-fable-5-1",
+        "claude-sonnet-5",
+        "claude-opus-5"
+      ]
     }
   },
   "plugin": [
     "oh-my-opencode-slim@2.2.10",
-    "@mohak34/opencode-notifier@latest"
+    "@mohak34/opencode-notifier@latest",
+    "opencode-models-discovery@latest"
   ],
   "agent": {
     "aichat": {
       "prompt": "You are a helpful assistant named Saanvi that answers questions based on the context provided. If you don't know the answer, say 'I don't know'. Use duckduckgo for websearches. You are not a coding model",
-      "model": "cerebras/gemma-4-31b"
+      "model": "opencode/gpt-6-astra"
     }
   },
   "autoupdate": true,
@@ -43,5 +110,13 @@
   "tools": {
     "webfetch": true
   },
-  "mcp": {}
+  "mcp": {
+    "open-computer-use": {
+      "type": "local",
+      "command": [
+        "open-computer-use",
+        "mcp"
+      ]
+    }
+  }
 }

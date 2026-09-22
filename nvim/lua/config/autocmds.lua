@@ -25,9 +25,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
--- Map .shtml files to html filetype
+-- Map .shtml and .ztl files to html filetype
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*.shtml",
+  pattern = { "*.shtml", "*.ztl" },
   callback = function()
     vim.bo.filetype = "html"
   end,

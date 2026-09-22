@@ -2,42 +2,26 @@
   "version": 3,
   "workspaces": [
     {
-      "id": "wB",
+      "id": "wD",
       "custom_name": null,
-      "identity_cwd": "/Users/himujjalupadhyaya/staffinity-ai/westack-it-clone",
+      "identity_cwd": "/Users/himujjalupadhyaya",
       "public_pane_numbers": {
-        "3": 1,
-        "4": 2
+        "4": 1
       },
-      "next_public_pane_number": 4,
+      "next_public_pane_number": 2,
       "public_tab_numbers": [
-        1,
-        2
+        1
       ],
-      "next_public_tab_number": 3,
+      "next_public_tab_number": 2,
       "tabs": [
         {
           "custom_name": null,
-          "layout": {
-            "Pane": 3
-          },
-          "panes": {
-            "3": {
-              "cwd": "/Users/himujjalupadhyaya/staffinity-ai/westack-it-clone"
-            }
-          },
-          "zoomed": false,
-          "focused": 3,
-          "root_pane": 3
-        },
-        {
-          "custom_name": "some",
           "layout": {
             "Pane": 4
           },
           "panes": {
             "4": {
-              "cwd": "/Users/himujjalupadhyaya/staffinity-ai/westack-it-clone"
+              "cwd": "/Users/himujjalupadhyaya"
             }
           },
           "zoomed": false,
@@ -45,7 +29,7 @@
           "root_pane": 4
         }
       ],
-      "active_tab": 1
+      "active_tab": 0
     }
   ],
   "active": 0,

@@ -1,9 +1,9 @@
 [tools]
 duckdb = "1.3.2"
 java = "21"
-zig = "latest"
+zig = "0.16"
 
-zls = "latest"
+zls = "0.16.0"
 
 [settings]
 idiomatic_version_file_enable_tools = ["python"]
