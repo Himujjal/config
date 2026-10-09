@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "codegeex",
+  "description": "CodeGeex AI code tools",
+  "author": {
+    "name": "MBearo"
+  },
+  "license": "MIT"
+}

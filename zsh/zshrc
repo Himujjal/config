@@ -141,9 +141,6 @@ function confraycast() {
 	cd $curr
 }
 
-function cdgati() {
-  cd ~/projects/ghost-n-steel/gati/gati-app
-}
 
 
 # alias confnvim="nvim ~/.config/nvim"
@@ -169,7 +166,10 @@ function confzsh() {
  cd $curr
 }
 
+alias oc='opencode'
 alias cdsaanvi="cd ~/projects/saanvi/Saanvi"
+alias cdgati="cd ~/projects/ghost-n-steel/gati/gati-app"
+alias cdsamvad="cd ~/projects/ghost-n-steel/samvad"
 
 function zbd() {
     echo "Testing zig function $1"
@@ -369,3 +369,13 @@ alias forge="forge-new"
 function dln() {
   bun $HOME/Documents/obsidian-personal/dln.ts
 }
+
+# ---- Android SDK ----
+if [ -d "$HOME/Library/Android/sdk" ]; then
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+  export ANDROID_SDK_ROOT="$ANDROID_HOME"
+  case ":$PATH:" in
+    *":$ANDROID_HOME/platform-tools:"*) ;;
+    *) export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH" ;;
+  esac
+fi
