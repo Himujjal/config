@@ -1,3 +1,6 @@
+-- Colorschemes and appearance.
+-- The active colorscheme is set via the LazyVim `colorscheme` opt at the bottom.
+
 local theme = {
   rose_pine = {
     "rose-pine/neovim",
@@ -13,13 +16,14 @@ local theme = {
   transparent_plugin = {
     "xiyaowong/transparent.nvim",
     opts = function()
-      vim.g.transaprent_enabled = true
+      vim.g.transparent_enabled = true
       return {}
     end,
   },
 }
 
-local function only_neovim_plugin(plugin)
+-- transparent.nvim conflicts with Neovide's compositor, so skip it there.
+local function except_neovide(plugin)
   if vim.g.neovide then
     return {}
   else
@@ -30,7 +34,7 @@ end
 return {
   theme.rose_pine,
   theme.tokyonight,
-  only_neovim_plugin(theme.transparent_plugin),
+  except_neovide(theme.transparent_plugin),
   {
     "LazyVim/LazyVim",
     opts = {

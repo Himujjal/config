@@ -14,6 +14,14 @@ return {
       { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
       { "<leader>E", "<cmd>Neotree reveal<cr>", desc = "Reveal Current File" },
       { "<leader>o", "<cmd>Neotree focus<cr>", desc = "Focus Explorer" },
+      {
+        ".",
+        function()
+          -- neo-tree set the cwd to the current file's directory under the cursor
+          require("neo-tree").change_dir(vim.fn.expand("%:p:h"))
+        end,
+        desc = "Set neovim directory to current file",
+      },
     },
     -- Keymaps defined here to ensure proper loading order with lazy.nvim
     opts = {
@@ -326,20 +334,5 @@ return {
         highlight NeoTreeModified guifg=#e0af68
       ]])
     end,
-  },
-
-  -- Disable nvim-tree if it was enabled
-  { "nvim-tree/nvim-tree.lua", enabled = false },
-  -- Disable LazyVim's default snacks explorer completely
-  {
-    "folke/snacks.nvim",
-    opts = {
-      explorer = { enabled = false },
-      picker = {
-        sources = {
-          explorer = { enabled = false },
-        },
-      },
-    },
   },
 }

@@ -1,3 +1,5 @@
+-- Yazi file manager integration: opens yazi in a floating terminal.
+
 local M = {}
 
 local yazi_buf = nil
@@ -42,6 +44,8 @@ function M.toggle_yazi()
   vim.cmd("startinsert")
 end
 
-vim.api.nvim_create_user_command("Yazi", M.toggle_yazi, { desc = "Toggle Yazi file manager" })
+function M.setup()
+  vim.api.nvim_create_user_command("Yazi", M.toggle_yazi, { desc = "Toggle Yazi file manager" })
+end
 
 return M

@@ -1,3 +1,8 @@
+-- Neovide (GUI) specific settings and keymaps.
+-- Only applies when running inside Neovide (vim.g.neovide is set).
+
+local M = {}
+
 local function mac_only_commands()
   if vim.fn.has("mac") == 0 then
     vim.g.neovide_input_macos_alt_is_meta = true
@@ -7,16 +12,17 @@ end
 local function get_title()
   -- get env variable named: `PWD`
   local pwd = vim.env.PWD
-
-  -- get basename of `PWD`
   if pwd == nil then
     return "Neovide"
   end
-
   return vim.fs.basename(pwd)
 end
 
-if vim.g.neovide then
+function M.setup()
+  if not vim.g.neovide then
+    return
+  end
+
   mac_only_commands()
   vim.opt.title = true
   vim.opt.titlestring = get_title()
@@ -26,11 +32,23 @@ if vim.g.neovide then
   -- font family
   -- vim.opt.guifont = "FiraCode Nerd Font Mono:"
   vim.g.gui_font_face = "Fira Code Retina"
-
   vim.g.neovide_cursor_vfx_mode = "ripple"
-
   vim.g.gui_font_default_size = 16
   vim.g.gui_font_size = vim.g.gui_font_default_size
+
+  local function refresh_gui_font()
+    vim.opt.guifont = string.format("%s:h%s", vim.g.gui_font_face, vim.g.gui_font_size)
+  end
+
+  local function resize_gui_font(delta)
+    vim.g.gui_font_size = vim.g.gui_font_size + delta
+    refresh_gui_font()
+  end
+
+  local function reset_gui_font()
+    vim.g.gui_font_size = vim.g.gui_font_default_size
+    refresh_gui_font()
+  end
 
   vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
   vim.keymap.set("v", "<D-c>", '"+y') -- Copy
@@ -42,35 +60,17 @@ if vim.g.neovide then
   local opts = { noremap = true, silent = true }
 
   vim.keymap.set({ "n", "i" }, "<C-=>", function()
-    ResizeGuiFont(1)
+    resize_gui_font(1)
   end, opts)
   vim.keymap.set({ "n", "i" }, "<C-->", function()
-    ResizeGuiFont(-1)
+    resize_gui_font(-1)
   end, opts)
   vim.keymap.set({ "n", "i" }, "<C-BS>", function()
-    ResetGuiFont()
+    reset_gui_font()
   end, opts)
 
-  ResizeGuiFont = function(delta)
-    vim.g.gui_font_size = vim.g.gui_font_size + delta
-    RefreshGuiFont()
-  end
-
-  RefreshGuiFont = function()
-    vim.opt.guifont = string.format("%s:h%s", vim.g.gui_font_face, vim.g.gui_font_size)
-  end
-
-  ResizeGuiFont = function(delta)
-    vim.g.gui_font_size = vim.g.gui_font_size + delta
-    RefreshGuiFont()
-  end
-
-  ResetGuiFont = function()
-    vim.g.gui_font_size = vim.g.gui_font_default_size
-    RefreshGuiFont()
-  end
-
   -- Call function on startup to set default value
-  ResetGuiFont()
-  return ResetGuiFont
+  reset_gui_font()
 end
+
+return M

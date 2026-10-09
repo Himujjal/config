@@ -1,3 +1,6 @@
+-- Disablements and overrides of LazyVim defaults.
+-- Kept separate so it's obvious what we've opted out of.
+
 return {
   -- Disable nvim-tree in favor of neo-tree
   { "nvim-tree/nvim-tree.lua", enabled = false },

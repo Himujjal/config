@@ -36,7 +36,7 @@ function M.toggle_kimish_session(opts)
   vim.cmd("botright " .. term_width .. "vnew")
   kimish_term_win = vim.api.nvim_get_current_win()
   vim.api.nvim_win_set_buf(kimish_term_win, kimish_term_buf)
-  
+
   -- Fix the width so it doesn't shift when entering/exiting
   vim.api.nvim_set_option_value("winfixwidth", true, { win = kimish_term_win })
 
@@ -142,7 +142,7 @@ function M.setup_terminal_keymaps()
       vim.api.nvim_chan_send(term_chan, "\n")
     end
   end
-  
+
   -- Alt+Enter (Meta+Enter) - works in most terminals
   vim.keymap.set("t", "<M-CR>", send_newline_no_submit, {
     buffer = kimish_term_buf,
@@ -150,7 +150,7 @@ function M.setup_terminal_keymaps()
     silent = true,
     desc = "Alt+Enter for new line in kimi",
   })
-  
+
   -- Also map <M-Enter> variant
   vim.keymap.set("t", "<M-Enter>", send_newline_no_submit, {
     buffer = kimish_term_buf,
@@ -158,7 +158,7 @@ function M.setup_terminal_keymaps()
     silent = true,
     desc = "Alt+Enter for new line in kimi",
   })
-  
+
   -- <C-j> is the most reliable - sends newline directly (same as Ctrl+J)
   vim.keymap.set("t", "<C-j>", function()
     local term_chan = vim.b[kimish_term_buf].terminal_job_id
@@ -171,7 +171,7 @@ function M.setup_terminal_keymaps()
     silent = true,
     desc = "Ctrl+J for new line in kimi",
   })
-  
+
   -- Note: These may work in some terminal emulators that are configured to send different sequences
   -- for Shift+Enter vs regular Enter (e.g., iTerm2 can be configured this way)
   vim.keymap.set("t", "<S-CR>", send_newline_no_submit, {
@@ -182,42 +182,45 @@ function M.setup_terminal_keymaps()
   })
 end
 
--- Create user commands
-vim.api.nvim_create_user_command("KimishToggle", function()
-  M.toggle_kimish_session({ thinking = false })
-end, { desc = "Toggle Kimish terminal session (no thinking)" })
+-- Register user commands and autocmds.
+-- Called once from the kimish plugin spec.
+function M.setup()
+  vim.api.nvim_create_user_command("KimishToggle", function()
+    M.toggle_kimish_session({ thinking = false })
+  end, { desc = "Toggle Kimish terminal session (no thinking)" })
 
-vim.api.nvim_create_user_command("KimishToggleThinking", function()
-  M.toggle_kimish_session({ thinking = true })
-end, { desc = "Toggle Kimish terminal session (with thinking)" })
+  vim.api.nvim_create_user_command("KimishToggleThinking", function()
+    M.toggle_kimish_session({ thinking = true })
+  end, { desc = "Toggle Kimish terminal session (with thinking)" })
 
--- Autocommand to enter insert mode when kimish terminal buffer is active
-vim.api.nvim_create_autocmd({ "TermEnter" }, {
-  pattern = "*",
-  callback = function()
-    if kimish_term_buf and vim.api.nvim_buf_is_valid(kimish_term_buf) then
-      local current_buf = vim.api.nvim_get_current_buf()
-      if current_buf == kimish_term_buf then
-        vim.cmd("startinsert")
+  -- Autocommand to enter insert mode when kimish terminal buffer is active
+  vim.api.nvim_create_autocmd({ "TermEnter" }, {
+    pattern = "*",
+    callback = function()
+      if kimish_term_buf and vim.api.nvim_buf_is_valid(kimish_term_buf) then
+        local current_buf = vim.api.nvim_get_current_buf()
+        if current_buf == kimish_term_buf then
+          vim.cmd("startinsert")
+        end
       end
-    end
-  end,
-  desc = "Auto-enter insert mode in kimish terminal",
-})
+    end,
+    desc = "Auto-enter insert mode in kimish terminal",
+  })
 
--- Also enter insert mode when entering the kimi window from another window
-vim.api.nvim_create_autocmd({ "WinEnter" }, {
-  pattern = "*",
-  callback = function()
-    if kimish_term_buf and vim.api.nvim_buf_is_valid(kimish_term_buf) then
-      local current_buf = vim.api.nvim_get_current_buf()
-      if current_buf == kimish_term_buf then
-        vim.cmd("startinsert")
+  -- Also enter insert mode when entering the kimi window from another window
+  vim.api.nvim_create_autocmd({ "WinEnter" }, {
+    pattern = "*",
+    callback = function()
+      if kimish_term_buf and vim.api.nvim_buf_is_valid(kimish_term_buf) then
+        local current_buf = vim.api.nvim_get_current_buf()
+        if current_buf == kimish_term_buf then
+          vim.cmd("startinsert")
+        end
       end
-    end
-  end,
-  desc = "Auto-enter insert mode when entering kimi terminal window",
-})
+    end,
+    desc = "Auto-enter insert mode when entering kimi terminal window",
+  })
+end
 
 -- Function to send visual selection to kimish terminal
 function M.send_visual_selection()
@@ -286,21 +289,4 @@ function M.send_visual_selection()
   vim.api.nvim_set_current_win(kimish_term_win)
 end
 
--- Global keymaps to toggle kimish
--- <leader>ka: kimish without thinking (yolo)
-vim.keymap.set("n", "<leader>ka", ":KimishToggle<CR>", { desc = "Toggle Kimish terminal (no thinking)", silent = true })
--- <leader>kt: kimish with thinking (yolo)
-vim.keymap.set("n", "<leader>kt", ":KimishToggleThinking<CR>", { desc = "Toggle Kimish terminal (with thinking)", silent = true })
-
--- Visual mode keymap to send selection to kimish
-vim.keymap.set("v", "<leader>ke", function()
-  -- Exit visual mode first to update marks
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", false)
-  -- Defer to allow marks to be set
-  vim.defer_fn(function()
-    M.send_visual_selection()
-  end, 10)
-end, { desc = "Send visual selection to Kimish", silent = true })
-
--- Return the module for external access
-return {}
+return M

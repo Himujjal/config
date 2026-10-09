@@ -1,9 +1,13 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
-require("dotenv").load()
+require("modules.dotenv").load()
 require("config.lazy")
 
 -- Start silent background auto-updater
-require("config.updater").setup()
+require("modules.updater").setup()
 
-require("neovide")
-require("yazi")
+-- GUI (Neovide) settings
+require("modules.neovide").setup()
+
+-- Custom integrations (no third-party plugin; commands + autocmds only)
+require("modules.kimish").setup()
+require("modules.yazi").setup()
