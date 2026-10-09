@@ -8,6 +8,12 @@ return {
       "esmuellert/codediff.nvim",
       "MunifTanjim/nui.nvim",
     },
+    init = function()
+      -- Release CDN stalls here, and the missing watcher binary would be
+      -- downloaded synchronously on first :CodeDiff (freezing the UI).
+      -- Fail fast to the polling fallback instead.
+      vim.env.CODEDIFF_WATCHER_NO_AUTO_INSTALL = "1"
+    end,
     event = "VeryLazy",
     keys = {
       { "<leader>rr", "<cmd>Review<cr>", desc = "Review working tree" },
